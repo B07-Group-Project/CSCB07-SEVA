@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "558387352508",
+    "project_id": "b07project-e4016",
+    "storage_bucket": "b07project-e4016.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558387352508:android:e9bdf0ca78d0dc684751b9",
+        "android_client_info": {
+          "package_name": "com.utsc.venuemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558387352508-d5ki9die765umabodg79n4oeibjf55f3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPo0Q-9YZQDpIR4jMc2GDkDjq7GrSUObQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558387352508-d5ki9die765umabodg79n4oeibjf55f3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

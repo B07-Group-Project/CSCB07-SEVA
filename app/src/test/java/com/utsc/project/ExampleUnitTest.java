@@ -1,4 +1,4 @@
-package com.example.project;
+package com.utsc.project;
 
 import org.junit.Test;
 
