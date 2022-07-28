@@ -13,10 +13,11 @@ public class User {
         this.createdEvents = new HashSet<>();
         this.joinedEvents = new HashSet<>();
     }
+    @Override
     public boolean equals(Object o) {
         if (o instanceof User) {
             User u = (User)o;
-            return Objects.equals(this.id, u.id);
+            return u.id.equals(this.id);
         } else {
             return false;
         }
