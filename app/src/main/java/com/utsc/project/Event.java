@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 public class Event {
     int id;
+    String name;
     HashSet<User> attendees; //should these be private?
     User creator;
     int maxPlayers;
@@ -11,8 +12,9 @@ public class Event {
     String endTime;
     Venue venue;
 
-    public Event(User creator, int maxPlayers, String startTime, String endTime,
+    public Event(String name, User creator, int maxPlayers, String startTime, String endTime,
                  Venue venue, int id) {
+        this.name = name;
         this.creator = creator;
         this.maxPlayers = maxPlayers;
         this.startTime = startTime;
@@ -22,7 +24,39 @@ public class Event {
         this.attendees = new HashSet<>();
     }
 
-     public void addAttendee(String id) {
+    public int getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public HashSet<User> getAttendees() {
+        return this.attendees;
+    }
+
+    public User getCreator() {
+        return this.creator;
+    }
+
+    public int getMaxPlayers() {
+        return this.maxPlayers;
+    }
+
+    public String getStartTime() {
+        return this.startTime;
+    }
+
+    public String getEndTime() {
+        return this.endTime;
+    }
+
+    public Venue getVenue() {
+        return this.venue;
+    }
+
+    public void addAttendee(String id) {
         this.attendees.add(new User(id));
     }
 
