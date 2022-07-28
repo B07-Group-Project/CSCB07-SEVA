@@ -13,6 +13,7 @@ public class User {
         this.createdEvents = new HashSet<>();
         this.joinedEvents = new HashSet<>();
     }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof User) {
