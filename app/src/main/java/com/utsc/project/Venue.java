@@ -2,10 +2,12 @@ package com.utsc.project;
 
 public class Venue {
     String name;
-    String address;
+    int id;
+    int courts;
 
-    public Venue(String name, String address) {
+    public Venue(String name, int id, int courts) {
         this.name = name;
-        this.address = address;
+        this.id = id;
+        this.courts = courts;
     }
 }
