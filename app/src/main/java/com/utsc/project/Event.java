@@ -3,23 +3,27 @@ package com.utsc.project;
 import java.util.HashSet;
 
 public class Event {
+
+    // i think we can make these private now that we have the getters
     int id;
     User creator;
     String name;
     String description;
     int maxPlayers;
+    String date;
     String startTime; //might change type in future
     String endTime;
     HashSet<User> attendees; //should these be private?
     Venue venue;
 
     public Event(int id, User creator, String name, String description, int maxPlayers,
-                 String startTime, String endTime, Venue venue) {
+                 String date, String startTime, String endTime, Venue venue) {
         this.id = id;
         this.creator = creator;
         this.name = name;
         this.description = description;
         this.maxPlayers = maxPlayers;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.venue = venue;
@@ -48,6 +52,10 @@ public class Event {
 
     public int getMaxPlayers() {
         return this.maxPlayers;
+    }
+
+    public String getDate() {
+        return this.date;
     }
 
     public String getStartTime() {
