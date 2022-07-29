@@ -21,7 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView eventName, creator, dateTime, description, venue;
+        private TextView eventName, creator, dateTime, description, venue, attendees;
         private ToggleButton join_button;
         private ImageView image;
 
@@ -32,6 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.dateTime = view.findViewById(R.id.dateTimeTextView);
             this.venue = view.findViewById(R.id.venueTextView);
             this.description = view.findViewById(R.id.descriptionTextView);
+            this.attendees = view.findViewById(R.id.playerCountTextView);
             this.join_button = view.findViewById(R.id.joinToggleButton);
             this.image = view.findViewById(R.id.eventImageView);
         }
@@ -51,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.dateTime.setText(eventsList.get(position).getDate() + ", " + eventsList.get(position).getStartTime() + " to " + eventsList.get(position).getEndTime());
         holder.description.setText(eventsList.get(position).getDescription());
         holder.venue.setText(eventsList.get(position).getVenue().getName());
+        holder.attendees.setText(eventsList.get(position).getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
     }
 
     @Override

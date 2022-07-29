@@ -53,13 +53,14 @@
                 android:id="@+id/joinToggleButton"
                 android:layout_width="88dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_marginTop="24dp"
                 android:checked="true"
                 android:text="ToggleButton"
                 android:textOff="@string/buttonJoin"
                 android:textOn="@string/buttonJoined"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/descriptionTextView" />
+                app:layout_constraintBottom_toBottomOf="@+id/playerCountTextView"
+                app:layout_constraintEnd_toEndOf="@+id/descriptionTextView"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
             <TextView
                 android:id="@+id/dateTimeTextView"
@@ -84,17 +85,25 @@
             <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
                 android:maxLines="5"
                 android:minLines="1"
                 android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/joinToggleButton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/eventImageView"
                 app:layout_constraintTop_toBottomOf="@+id/eventImageView" />
+
+            <TextView
+                android:id="@+id/playerCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/descriptionTextView"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
