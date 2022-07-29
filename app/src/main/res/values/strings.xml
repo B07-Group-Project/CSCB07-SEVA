@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Project</string>
+    <string name="buttonJoin">JOIN</string>
+    <string name="buttonJoined">JOINED</string>
 </resources>
