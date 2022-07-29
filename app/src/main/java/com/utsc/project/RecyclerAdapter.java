@@ -15,11 +15,9 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
-    Context context;
     private ArrayList<Event> eventsList;
 
-    public RecyclerAdapter(Context context, ArrayList<Event> myEvents) {
-        this.context = context;
+    public RecyclerAdapter(ArrayList<Event> myEvents) {
         this.eventsList = myEvents;
     }
 
