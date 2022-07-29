@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/eventImageView"
-                android:layout_width="127dp"
-                android:layout_height="129dp"
+                android:layout_width="108dp"
+                android:layout_height="103dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="parent"
