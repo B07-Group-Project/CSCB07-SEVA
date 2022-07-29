@@ -4,23 +4,25 @@ import java.util.HashSet;
 
 public class Event {
     int id;
-    String name;
-    HashSet<User> attendees; //should these be private?
     User creator;
+    String name;
+    String description;
     int maxPlayers;
     String startTime; //might change type in future
     String endTime;
+    HashSet<User> attendees; //should these be private?
     Venue venue;
 
-    public Event(String name, User creator, int maxPlayers, String startTime, String endTime,
-                 Venue venue, int id) {
-        this.name = name;
+    public Event(int id, User creator, String name, String description, int maxPlayers,
+                 String startTime, String endTime, Venue venue) {
+        this.id = id;
         this.creator = creator;
+        this.name = name;
+        this.description = description;
         this.maxPlayers = maxPlayers;
         this.startTime = startTime;
         this.endTime = endTime;
         this.venue = venue;
-        this.id = id;
         this.attendees = new HashSet<>();
     }
 
@@ -30,6 +32,10 @@ public class Event {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public HashSet<User> getAttendees() {
