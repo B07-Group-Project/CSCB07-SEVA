@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 public class User {
-    String id;
+    public String id;
     HashSet<Event> createdEvents; //load from db on login?
     HashSet<Event> joinedEvents; //load from db on login?
 

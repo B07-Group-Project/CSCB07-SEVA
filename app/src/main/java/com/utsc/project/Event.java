@@ -3,15 +3,15 @@ package com.utsc.project;
 import java.util.HashSet;
 
 public class Event {
-    int id;
-    User creator;
-    String name;
-    String description;
-    int maxPlayers;
-    String startTime; //might change type in future
-    String endTime;
-    HashSet<User> attendees; //should these be private?
-    Venue venue;
+    public int id;
+    public User creator;
+    public String name;
+    public String description;
+    public int maxPlayers;
+    public String startTime; //might change type in future
+    public String endTime;
+    public HashSet<User> attendees; //should these be private?
+    public Venue venue;
 
     public Event(int id, User creator, String name, String description, int maxPlayers,
                  String startTime, String endTime, Venue venue) {
