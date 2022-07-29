@@ -10,4 +10,16 @@ public class Venue {
         this.id = id;
         this.courts = courts;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCourts() {
+        return courts;
+    }
 }
