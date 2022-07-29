@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class User {
     public String id;
+
     HashSet<Event> createdEvents; //load from db on login?
     HashSet<Event> joinedEvents; //load from db on login?
 
@@ -12,6 +13,9 @@ public class User {
         this.id = id;
         this.createdEvents = new HashSet<>();
         this.joinedEvents = new HashSet<>();
+    }
+
+    public User(){
     }
 
     @Override

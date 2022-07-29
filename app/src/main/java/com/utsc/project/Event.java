@@ -1,75 +1,75 @@
 package com.utsc.project;
 
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Event {
     public int id;
-    public User creator;
+    public String creatorid;
     public String name;
     public String description;
     public int maxPlayers;
     public String startTime; //might change type in future
     public String endTime;
-    public HashSet<User> attendees; //should these be private?
-    public Venue venue;
 
-    public Event(int id, User creator, String name, String description, int maxPlayers,
-                 String startTime, String endTime, Venue venue) {
+    @Exclude
+    public HashSet<User> attendees;
+
+    public int venueid;
+
+    public Event(int id, String creatorid, String name, String description, int maxPlayers,
+                 String startTime, String endTime, int venueid) {
         this.id = id;
-        this.creator = creator;
+        this.creatorid = creatorid;
         this.name = name;
         this.description = description;
         this.maxPlayers = maxPlayers;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.venue = venue;
+        this.venueid = venueid;
         this.attendees = new HashSet<>();
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public HashSet<User> getAttendees() {
-        return this.attendees;
-    }
-
-    public User getCreator() {
-        return this.creator;
-    }
-
-    public int getMaxPlayers() {
-        return this.maxPlayers;
-    }
-
-    public String getStartTime() {
-        return this.startTime;
-    }
-
-    public String getEndTime() {
-        return this.endTime;
-    }
-
-    public Venue getVenue() {
-        return this.venue;
+    public Event() {
     }
 
     public void addAttendee(String id) {
         this.attendees.add(new User(id));
     }
 
+    /*public void loadAttendeesFromDB() { //can add callback param
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    User u = child.getValue(User.class);
+                    addAttendee(u.id);
+                    Log.w("warning", u.id);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Database.loadAttendees(listener, this.id);
+    }*/
+
+    @Exclude
     public void removeAttendee(String id) {
         this.attendees.remove(new User(id));
     }
 
+    @Exclude
     public int getUserCount() {
         return attendees.size();
     }
