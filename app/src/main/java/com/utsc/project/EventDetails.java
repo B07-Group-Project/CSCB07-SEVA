@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,15 +16,54 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class EventDetails extends AppCompatActivity {
+import java.util.Objects;
 
+public class EventDetails extends AppCompatActivity {
     void addEventButton(Event e) {
+        Button join = new Button(this);
+        join.setBackgroundColor(Color.rgb(104, 4, 236));
+        join.setTextColor(Color.WHITE);
+        join.setText("Join");
+        ValueEventListener getJoined = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    User u = child.getValue(User.class);
+                    if (Objects.equals(u.id, "DemoUser")) { //get USERID from login class
+                        join.setText("Joined");
+                        join.setEnabled(false);
+                        join.setBackgroundColor(Color.rgb(62, 2, 142));
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Database.loadAttendees(getJoined, e.id);
+
         LinearLayout buttonContainer = (LinearLayout) findViewById(R.id.eventlistlayout);
-        Context c = this;
         Button b = new Button(this);
         b.setText(e.name);
-        //e.loadAttendeesFromDB();
+        Context c = this;
+        Button desc = new Button(this);
+        desc.setText(e.description);
         buttonContainer.addView(b);
+        buttonContainer.addView(desc);
+        View.OnClickListener l = new View.OnClickListener() {
+            public void onClick(View v) {
+                Database.joinEvent(e.id);
+                Button conv = (Button)v;
+                conv.setText("Joined");
+                conv.setEnabled(false);
+                conv.setBackgroundColor(Color.rgb(62, 2, 142));
+            }
+        };
+        join.setOnClickListener(l);
+        buttonContainer.addView(join);
     }
 
     @Override
@@ -45,6 +85,8 @@ public class EventDetails extends AppCompatActivity {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                LinearLayout buttonContainer = (LinearLayout) findViewById(R.id.eventlistlayout);
+                buttonContainer.removeAllViews();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Event e = child.getValue(Event.class);
                     for (DataSnapshot currentAttendee : child.child("attendees").getChildren()) {

@@ -50,6 +50,11 @@ public class VenueDisplay extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
+                    for (DataSnapshot eType : dataSnapshot.child("eventTypes").getChildren()) {
+                        String eventString = eType.getValue(String.class);
+                        v.eventTypes.add(eventString);
+                        Log.w("warning", eventString);
+                    }
                     addVenueButton(v);
                 }
             }
