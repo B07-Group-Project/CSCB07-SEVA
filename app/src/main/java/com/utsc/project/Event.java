@@ -37,6 +37,42 @@ public class Event {
         this.venueid = venueid;
         this.attendees = new HashSet<>();
     }
+    @Exclude
+    public int getId() {
+        return this.id;
+    }
+    @Exclude
+    public String getName() {
+        return this.name;
+    }
+    @Exclude
+    public String getDescription() {
+        return this.description;
+    }
+    @Exclude
+    public HashSet<User> getAttendees() {
+        return this.attendees;
+    }
+    @Exclude
+    public String getCreatorID() {
+        return this.creatorid;
+    }
+    @Exclude
+    public int getMaxPlayers() {
+        return this.maxPlayers;
+    }
+    @Exclude
+    public String getStartTime() {
+        return this.startTime;
+    }
+    @Exclude
+    public String getEndTime() {
+        return this.endTime;
+    }
+    @Exclude
+    public int getVenueID() {
+        return this.venueid;
+    }
 
     public Event() {
     }
@@ -45,26 +81,6 @@ public class Event {
         this.attendees.add(new User(id));
     }
 
-    /*public void loadAttendeesFromDB() { //can add callback param
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    User u = child.getValue(User.class);
-                    addAttendee(u.id);
-                    Log.w("warning", u.id);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        Database.loadAttendees(listener, this.id);
-    }*/
-
-    @Exclude
     public void removeAttendee(String id) {
         this.attendees.remove(new User(id));
     }
