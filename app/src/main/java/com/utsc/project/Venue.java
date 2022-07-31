@@ -16,6 +16,10 @@ public class Venue {
         this.eventTypes = new ArrayList<>();
     }
 
+    public Venue() {
+        this.eventTypes = new ArrayList<>();
+    }
+
     public String getName() {
         return name;
     }
