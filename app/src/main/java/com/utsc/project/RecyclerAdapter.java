@@ -50,11 +50,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, int position) {
         holder.eventName.setText(eventsList.get(position).getName());
+
+        // for future? -> check if the creator is the login user -> if yes, display "Created by: me"
         holder.creator.setText("Created by: " + eventsList.get(position).getCreatorID());
         holder.dateTime.setText(eventsList.get(position).getStartTime() + " to " + eventsList.get(position).getEndTime());
         holder.description.setText(eventsList.get(position).getDescription());
         holder.venue.setText("Venue: " + eventsList.get(position).getVenueID());
         holder.attendees.setText(eventsList.get(position).getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
+
+        // will need to be modified if this adapter is going to be reused to display the upcoming events page
         holder.join_button.setChecked(true);
     }
 
