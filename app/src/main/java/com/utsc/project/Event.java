@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Event {
     public int id;
-    public String creatorid;
+    public String creatorID;
     public String name;
     public String description;
     public int maxPlayers;
@@ -23,20 +23,25 @@ public class Event {
     @Exclude
     public HashSet<User> attendees;
 
-    public int venueid;
+    public int venueID;
 
-    public Event(int id, String creatorid, String name, String description, int maxPlayers,
-                 String startTime, String endTime, int venueid) {
+    public Event() {
+        this.attendees = new HashSet<User>();
+    }
+
+    public Event(int id, String creatorID, String name, String description, int maxPlayers,
+                 String startTime, String endTime, int venueID) {
         this.id = id;
-        this.creatorid = creatorid;
+        this.creatorID = creatorID;
         this.name = name;
         this.description = description;
         this.maxPlayers = maxPlayers;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.venueid = venueid;
+        this.venueID = venueID;
         this.attendees = new HashSet<>();
     }
+
     @Exclude
     public int getId() {
         return this.id;
@@ -55,7 +60,7 @@ public class Event {
     }
     @Exclude
     public String getCreatorID() {
-        return this.creatorid;
+        return this.creatorID;
     }
     @Exclude
     public int getMaxPlayers() {
@@ -71,10 +76,7 @@ public class Event {
     }
     @Exclude
     public int getVenueID() {
-        return this.venueid;
-    }
-
-    public Event() {
+        return this.venueID;
     }
 
     public void addAttendee(String id) {

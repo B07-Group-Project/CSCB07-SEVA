@@ -97,7 +97,7 @@ public class EventDetails extends AppCompatActivity {
                     }
                     Intent intent = getIntent();
                     Integer id = intent.getIntExtra("com.utsc.project.VENUEID", 0);
-                    if (e.venueid == id) {
+                    if (e.venueID == id) {
                         addEventButton(e);
                     }
                 }
