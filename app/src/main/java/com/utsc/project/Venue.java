@@ -1,9 +1,17 @@
 package com.utsc.project;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Venue {
-    String name;
-    int id;
-    int courts;
+    public String name;
+    public int id;
+    public int courts;
+
+    @Exclude
+    List<String> eventTypes = new ArrayList<String>();
 
     public Venue(String name, int id, int courts) {
         this.name = name;
@@ -11,15 +19,6 @@ public class Venue {
         this.courts = courts;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getCourts() {
-        return courts;
+    public Venue() {
     }
 }

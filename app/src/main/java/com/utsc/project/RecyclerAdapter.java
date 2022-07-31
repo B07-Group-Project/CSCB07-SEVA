@@ -27,6 +27,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         public MyViewHolder(final View view) {
             super(view);
+
             this.eventName = view.findViewById(R.id.eventNameTextView);
             this.creator = view.findViewById(R.id.creatorTextView);
             this.dateTime = view.findViewById(R.id.dateTimeTextView);
@@ -35,6 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.attendees = view.findViewById(R.id.playerCountTextView);
             this.join_button = view.findViewById(R.id.joinToggleButton);
             this.image = view.findViewById(R.id.eventImageView);
+
         }
     }
 
@@ -48,11 +50,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, int position) {
         holder.eventName.setText(eventsList.get(position).getName());
-        holder.creator.setText("Created by: " + eventsList.get(position).getCreator());
-        holder.dateTime.setText(eventsList.get(position).getDate() + ", " + eventsList.get(position).getStartTime() + " to " + eventsList.get(position).getEndTime());
+        holder.creator.setText("Created by: " + eventsList.get(position).getCreatorID());
+        holder.dateTime.setText(eventsList.get(position).getStartTime() + " to " + eventsList.get(position).getEndTime());
         holder.description.setText(eventsList.get(position).getDescription());
-        holder.venue.setText(eventsList.get(position).getVenue().getName());
+        holder.venue.setText("Venue: " + eventsList.get(position).getVenueID());
         holder.attendees.setText(eventsList.get(position).getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
+        holder.join_button.setChecked(true);
     }
 
     @Override

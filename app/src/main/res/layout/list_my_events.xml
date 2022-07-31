@@ -1,111 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="45dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="409dp"
-            android:layout_height="729dp">
+        <ImageView
+            android:id="@+id/eventImageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
-            <ImageView
-                android:id="@+id/eventImageView"
-                android:layout_width="108dp"
-                android:layout_height="103dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+        <ToggleButton
+            android:id="@+id/joinToggleButton"
+            android:layout_width="88dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:checked="true"
+            android:text="ToggleButton"
+            android:textOff="@string/buttonJoin"
+            android:textOn="@string/buttonJoined"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/descriptionTextView"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="5"
+            android:minLines="1"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/eventImageView"
+            app:layout_constraintTop_toBottomOf="@+id/eventImageView" />
+
+        <TextView
+            android:id="@+id/playerCountTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="TextView"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/joinToggleButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/eventImageView"
+            app:layout_constraintTop_toTopOf="@+id/eventImageView">
 
             <TextView
                 android:id="@+id/eventNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
                 android:gravity="bottom|start"
                 android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/creatorTextView"
-                app:layout_constraintTop_toTopOf="@+id/eventImageView" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/venueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/creatorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="bottom|start"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/dateTimeTextView"
-                app:layout_constraintStart_toStartOf="@+id/dateTimeTextView"
-                app:layout_constraintTop_toBottomOf="@+id/eventNameTextView" />
-
-            <ToggleButton
-                android:id="@+id/joinToggleButton"
-                android:layout_width="88dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:checked="true"
-                android:text="ToggleButton"
-                android:textOff="@string/buttonJoin"
-                android:textOn="@string/buttonJoined"
-                app:layout_constraintBottom_toBottomOf="@+id/playerCountTextView"
-                app:layout_constraintEnd_toEndOf="@+id/descriptionTextView"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+                android:text="TextView" />
 
             <TextView
                 android:id="@+id/dateTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/venueTextView"
-                app:layout_constraintStart_toStartOf="@+id/venueTextView"
-                app:layout_constraintTop_toBottomOf="@+id/creatorTextView" />
+                android:textSize="14sp" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/venueTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="TextView"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/eventImageView"
-                app:layout_constraintStart_toEndOf="@+id/eventImageView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/descriptionTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:maxLines="5"
-                android:minLines="1"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/eventImageView"
-                app:layout_constraintTop_toBottomOf="@+id/eventImageView" />
-
-            <TextView
-                android:id="@+id/playerCountTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/descriptionTextView"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

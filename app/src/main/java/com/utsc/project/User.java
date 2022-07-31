@@ -1,17 +1,13 @@
 package com.utsc.project;
 
-import java.util.HashSet;
-import java.util.Objects;
-
 public class User {
-    String id;
-    HashSet<Event> createdEvents; //load from db on login?
-    HashSet<Event> joinedEvents; //load from db on login?
+    public String id;
 
     public User(String id) {
         this.id = id;
-        this.createdEvents = new HashSet<>();
-        this.joinedEvents = new HashSet<>();
+    }
+
+    public User(){
     }
 
     @Override

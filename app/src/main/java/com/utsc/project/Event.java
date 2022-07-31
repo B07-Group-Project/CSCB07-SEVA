@@ -1,73 +1,82 @@
 package com.utsc.project;
 
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Event {
+    public int id;
+    public String creatorID;
+    public String name;
+    public String description;
+    public int maxPlayers;
+    public String startTime; //might change type in future
+    public String endTime;
 
-    // i think we can make these private now that we have the getters
-    int id;
-    User creator;
-    String name;
-    String description;
-    int maxPlayers;
-    String date;
-    String startTime; //might change type in future
-    String endTime;
-    HashSet<User> attendees; //should these be private?
-    Venue venue;
+    @Exclude
+    public HashSet<User> attendees;
 
-    public Event(int id, User creator, String name, String description, int maxPlayers,
-                 String date, String startTime, String endTime, Venue venue) {
+    public int venueID;
+
+    public Event() {
+        this.attendees = new HashSet<User>();
+    }
+
+    public Event(int id, String creatorID, String name, String description, int maxPlayers,
+                 String startTime, String endTime, int venueID) {
         this.id = id;
-        this.creator = creator;
+        this.creatorID = creatorID;
         this.name = name;
         this.description = description;
         this.maxPlayers = maxPlayers;
-        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.venue = venue;
+        this.venueID = venueID;
         this.attendees = new HashSet<>();
     }
 
+    @Exclude
     public int getId() {
         return this.id;
     }
-
+    @Exclude
     public String getName() {
         return this.name;
     }
-
+    @Exclude
     public String getDescription() {
         return this.description;
     }
-
+    @Exclude
     public HashSet<User> getAttendees() {
         return this.attendees;
     }
-
-    public User getCreator() {
-        return this.creator;
+    @Exclude
+    public String getCreatorID() {
+        return this.creatorID;
     }
-
+    @Exclude
     public int getMaxPlayers() {
         return this.maxPlayers;
     }
-
-    public String getDate() {
-        return this.date;
-    }
-
+    @Exclude
     public String getStartTime() {
         return this.startTime;
     }
-
+    @Exclude
     public String getEndTime() {
         return this.endTime;
     }
-
-    public Venue getVenue() {
-        return this.venue;
+    @Exclude
+    public int getVenueID() {
+        return this.venueID;
     }
 
     public void addAttendee(String id) {
@@ -78,6 +87,7 @@ public class Event {
         this.attendees.remove(new User(id));
     }
 
+    @Exclude
     public int getUserCount() {
         return attendees.size();
     }
