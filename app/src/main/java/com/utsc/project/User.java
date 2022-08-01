@@ -1,5 +1,7 @@
 package com.utsc.project;
 
+import java.util.Objects;
+
 public class User {
     public String id;
 
@@ -8,6 +10,12 @@ public class User {
     }
 
     public User(){
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

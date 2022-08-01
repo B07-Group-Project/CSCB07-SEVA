@@ -97,6 +97,11 @@ public class Event {
     }
 
     @Override
+    public int hashCode() {
+        return this.id;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Event) {
             Event e = (Event)o;
