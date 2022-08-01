@@ -38,7 +38,7 @@ public class DisplayMyEventsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         myEvents = new ArrayList<Event>();
-        adapter = new RecyclerAdapter(myEvents);
+        adapter = new RecyclerAdapter(myEvents, uid);
         recyclerView.setAdapter(adapter);
 
         Database.listEvents(new ValueEventListener() {

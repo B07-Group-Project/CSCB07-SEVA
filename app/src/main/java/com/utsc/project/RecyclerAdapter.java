@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     private ArrayList<Event> eventsList;
+    String uid;
 
-    public RecyclerAdapter(ArrayList<Event> myEvents) {
+    public RecyclerAdapter(ArrayList<Event> myEvents, String uid) {
         this.eventsList = myEvents;
+        this.uid = uid;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -51,15 +53,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, int position) {
         holder.eventName.setText(eventsList.get(position).getName());
 
-        // for future? -> check if the creator is the login user -> if yes, display "Created by: me"
-        holder.creator.setText("Created by: " + eventsList.get(position).getCreatorID());
+        if (eventsList.get(position).getCreatorID().equals(this.uid)) {
+            holder.creator.setText("Created by: Me");
+        }
+        else {
+            holder.creator.setText("Created by: " + eventsList.get(position).getCreatorID());
+        }
+
+        // need to update date and time display
         holder.dateTime.setText(eventsList.get(position).getStartTime() + " to " + eventsList.get(position).getEndTime());
+
         holder.description.setText(eventsList.get(position).getDescription());
         holder.venue.setText("Venue: " + eventsList.get(position).getVenueID());
         holder.attendees.setText(eventsList.get(position).getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
-
-        // will need to be modified if this adapter is going to be reused to display the upcoming events page
-        holder.join_button.setChecked(true);
+        holder.join_button.setChecked(eventsList.get(position).isAttendee(new User(this.uid)));
     }
 
     @Override

@@ -87,6 +87,10 @@ public class Event {
         this.attendees.remove(new User(id));
     }
 
+    public boolean isAttendee(User u) {
+        return this.attendees.contains(u);
+    }
+
     @Exclude
     public int getUserCount() {
         return attendees.size();
