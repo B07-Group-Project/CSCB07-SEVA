@@ -1,8 +1,10 @@
 package com.utsc.project;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -69,11 +71,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.venue.setText("Venue: " + currentEvent.getVenueID());
         holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
         holder.join_button.setChecked(currentEvent.isAttendee(new User(this.uid)));
+
         View.OnClickListener l = new View.OnClickListener() {
             public void onClick(View v) {
                 Database.joinEvent(currentEvent.id);
             }
         };
+
         holder.join_button.setOnClickListener(l);
     }
 
@@ -91,6 +95,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         if (eventsList.contains(e)) {
             MyViewHolder vh = (MyViewHolder) rv.findViewHolderForAdapterPosition(eventsList.indexOf(e));
             vh.join_button.setChecked(true);
+            View.OnClickListener l = new View.OnClickListener() {
+                public void onClick(View v) {
+                    ToggleButton me = (ToggleButton)v;
+                    Database.leaveEvent(e.id);
+                    me.setChecked(false);
+                    View.OnClickListener l2 = new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Database.joinEvent(e.id);
+                        }
+                    };
+
+                    me.setOnClickListener(l2);
+                }
+            };
+            vh.join_button.setOnClickListener(l);
         }
     }
 

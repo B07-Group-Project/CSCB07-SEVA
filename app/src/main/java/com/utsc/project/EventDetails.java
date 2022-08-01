@@ -30,6 +30,7 @@ public class EventDetails extends AppCompatActivity {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     User u = child.getValue(User.class);
                     if (Objects.equals(u.id, "DemoUser")) { //get USERID from login class
+                        e.addAttendee(u.id);
                         adapter.setJoined(e);
                         break;
                     }
