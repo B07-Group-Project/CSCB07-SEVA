@@ -28,7 +28,6 @@ import java.util.HashSet;
 public class myEventsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    DatabaseReference db;
     RecyclerAdapter adapter;
     ArrayList<Event> myEvents;
 
@@ -78,7 +77,7 @@ public class myEventsFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
-        String uid = "DemoUser";
+        String uid = "DemoUser"; // need to figure out how to get user id
 
         View view = inflater.inflate(R.layout.fragment_my_events, container, false);
         recyclerView = view.findViewById(R.id.myEventsRecyclerView);
