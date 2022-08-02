@@ -1,11 +1,15 @@
 package com.utsc.project;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 
 public class Venue {
     String name;
     int id;
     int courts;
+
+    @Exclude
     ArrayList<String> eventTypes;
 
 

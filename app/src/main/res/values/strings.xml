@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Project</string>
     <string name="create_event_title">Create an Event</string>
+    <string name="create_event_venue_title">Venue:</string>
+    <string name="create_event_event_type_title">Event Type:</string>
+    <string name="create_event_name">Event Name:</string>
+    <string name="create_event_name_hint">Name</string>
+    <string name="create_event_desc_title">Description</string>
+    <string name="create_event_maxpl_title">Max Players:</string>
 </resources>
