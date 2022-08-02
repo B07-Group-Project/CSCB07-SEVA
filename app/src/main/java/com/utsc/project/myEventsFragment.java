@@ -71,6 +71,31 @@ public class myEventsFragment extends Fragment {
         }
     }
 
+    void addEventButton(Event e) {
+        ValueEventListener getJoined = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    User u = child.getValue(User.class);
+                    if (u.id.equals("DemoUser")) { //get USERID from login class
+                        e.addAttendee(u.id);
+                        adapter.setJoined(e);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Database.loadAttendees(getJoined, e.id);
+        myEvents.add(e);
+        adapter.notifyDataSetChanged();
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,27 +112,29 @@ public class myEventsFragment extends Fragment {
         adapter = new RecyclerAdapter(myEvents, uid);
         recyclerView.setAdapter(adapter);
 
-        Database.listEvents(new ValueEventListener() {
+        ValueEventListener l = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                myEvents.clear();
+                adapter.notifyDataSetChanged();
                 for (DataSnapshot eventData : snapshot.getChildren()) { // for all children under Events
                     Event e = eventData.getValue(Event.class);
-                    HashSet<User> attendees = new HashSet<User>();
+
                     boolean joined = false;
 
-                    for (DataSnapshot attendeeChild: snapshot.child(e.getId()+"/attendees").getChildren()) { // for all children under attendees
-                        User a = attendeeChild.getValue(User.class);
-                        attendees.add(a);
+                    for (DataSnapshot attendeeChild : snapshot.child(e.getId() + "/attendees").getChildren()) { // for all children under attendees
+                        User u = attendeeChild.getValue(User.class);
+                        if (u != null) {
+                            e.addAttendee(u.id);
+                        }
 
-                        if (a.id.equals(uid)) {
+                        if (u.id.equals(uid)) {
                             joined = true;
                         }
                     }
 
                     if (joined) {
-                        e.attendees = attendees;
-                        myEvents.add(e);
+                        addEventButton(e);
                     }
 
                 }
@@ -120,8 +147,11 @@ public class myEventsFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("warning", "loadPost:onCancelled", error.toException());
             }
-        });
+        };
+
+        Database.listEvents(l);
 
         return view;
     }
+
 }

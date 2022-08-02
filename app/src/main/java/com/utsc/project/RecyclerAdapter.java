@@ -1,8 +1,10 @@
 package com.utsc.project;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     private ArrayList<Event> eventsList;
+    private RecyclerView rv;
     String uid;
 
     public RecyclerAdapter(ArrayList<Event> myEvents, String uid) {
@@ -51,22 +54,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, int position) {
-        holder.eventName.setText(eventsList.get(position).getName());
+        Event currentEvent = eventsList.get(position);
+        holder.eventName.setText(currentEvent.getName());
 
-        if (eventsList.get(position).getCreatorID().equals(this.uid)) {
+        if (currentEvent.getCreatorID().equals(this.uid)) {
             holder.creator.setText("Created by: Me");
         }
         else {
-            holder.creator.setText("Created by: " + eventsList.get(position).getCreatorID());
+            holder.creator.setText("Created by: " + currentEvent.getCreatorID());
         }
 
         // need to update date and time display
-        holder.dateTime.setText(eventsList.get(position).getStartTime() + " to " + eventsList.get(position).getEndTime());
+        holder.dateTime.setText(currentEvent.getStartTime() + " to " + currentEvent.getEndTime());
 
-        holder.description.setText(eventsList.get(position).getDescription());
-        holder.venue.setText("Venue: " + eventsList.get(position).getVenueID());
-        holder.attendees.setText(eventsList.get(position).getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
-        holder.join_button.setChecked(eventsList.get(position).isAttendee(new User(this.uid)));
+        holder.description.setText(currentEvent.getDescription());
+        holder.venue.setText("Venue: " + currentEvent.getVenueID());
+        holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
+        holder.join_button.setChecked(currentEvent.isAttendee(new User(this.uid)));
+
+        View.OnClickListener l = new View.OnClickListener() {
+            public void onClick(View v) {
+                Database.joinEvent(currentEvent.id);
+            }
+        };
+
+        holder.join_button.setOnClickListener(l);
     }
 
     @Override
@@ -74,5 +86,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return eventsList.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView r) {
+        rv = r;
+    }
+
+    public void setJoined(Event e) {
+        if (eventsList.contains(e)) {
+            MyViewHolder vh = (MyViewHolder) rv.findViewHolderForAdapterPosition(eventsList.indexOf(e));
+            vh.join_button.setChecked(true);
+            View.OnClickListener l = new View.OnClickListener() {
+                public void onClick(View v) {
+                    ToggleButton me = (ToggleButton)v;
+                    Database.leaveEvent(e.id);
+                    me.setChecked(false);
+                    View.OnClickListener l2 = new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Database.joinEvent(e.id);
+                        }
+                    };
+
+                    me.setOnClickListener(l2);
+                }
+            };
+            vh.join_button.setOnClickListener(l);
+        }
+    }
 
 }
