@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -70,7 +71,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.description.setText(currentEvent.getDescription());
         holder.venue.setText("Venue: " + currentEvent.getVenueID());
         holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
-        holder.join_button.setChecked(currentEvent.isAttendee(new User(this.uid)));
+
+        if (this.uid.equals(currentEvent.creatorID)) {
+            holder.join_button.setChecked(true);
+        }
+        else {
+            holder.join_button.setChecked(currentEvent.isAttendee(new User(this.uid)));
+        }
 
         View.OnClickListener l = new View.OnClickListener() {
             public void onClick(View v) {
@@ -97,16 +104,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             vh.join_button.setChecked(true);
             View.OnClickListener l = new View.OnClickListener() {
                 public void onClick(View v) {
-                    ToggleButton me = (ToggleButton)v;
-                    Database.leaveEvent(e.id);
-                    me.setChecked(false);
-                    View.OnClickListener l2 = new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Database.joinEvent(e.id);
-                        }
-                    };
+                    ToggleButton me = (ToggleButton) v;
+                    if (!uid.equals(e.creatorID)) {
+                        Database.leaveEvent(e.id);
+                        me.setChecked(false);
+                        View.OnClickListener l2 = new View.OnClickListener() {
+                            public void onClick(View v) {
+                                Database.joinEvent(e.id);
+                            }
+                        };
 
-                    me.setOnClickListener(l2);
+                        me.setOnClickListener(l2);
+                    }
+                    else {
+                        me.setChecked(true);
+                        Toast.makeText(rv.getContext(), "You cannot leave your own event.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             };
             vh.join_button.setOnClickListener(l);
