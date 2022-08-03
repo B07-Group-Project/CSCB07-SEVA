@@ -3,6 +3,7 @@ package com.utsc.project;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashSet;
+
 import java.util.Objects;
 
 public class User {
@@ -13,7 +14,7 @@ public class User {
         this.id = id;
     }
 
-    public User(){}
+    public User() {}
 
     public User(String username, String password){
         this.id = username;
@@ -35,3 +36,4 @@ public class User {
         }
     }
 }
+

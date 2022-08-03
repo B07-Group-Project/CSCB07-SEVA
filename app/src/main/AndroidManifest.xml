@@ -25,6 +25,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".login_page" />
         </activity>
+            android:name=".EventDetails"
+            android:exported="false" />
+        <activity
+            android:name=".VenueDisplay"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
