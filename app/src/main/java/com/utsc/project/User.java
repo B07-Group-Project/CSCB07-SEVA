@@ -18,6 +18,9 @@ public class User {
         return Objects.hash(id);
     }
 
+    public User(){
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof User) {

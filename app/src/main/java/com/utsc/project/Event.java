@@ -28,7 +28,6 @@ public class Event {
     public Event() {
         this.attendees = new HashSet<User>();
     }
-
     public Event(int id, String creatorID, String name, String description, int maxPlayers,
                  String startTime, String endTime, int venueID) {
         this.id = id;

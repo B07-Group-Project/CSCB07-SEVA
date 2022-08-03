@@ -71,7 +71,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.description.setText(currentEvent.getDescription());
         holder.venue.setText("Venue: " + currentEvent.getVenueID());
         holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
-
         if (this.uid.equals(currentEvent.creatorID)) {
             holder.join_button.setChecked(true);
         }
@@ -125,5 +124,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             vh.join_button.setOnClickListener(l);
         }
     }
-
 }
