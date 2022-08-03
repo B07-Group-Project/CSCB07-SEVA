@@ -1,20 +1,25 @@
 package com.utsc.project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class Register_page extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAuth mAuth;
     private TextView register;
     private EditText username, password, c_password;
 
@@ -70,6 +75,29 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
         DatabaseReference ref =
                 FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
                 ).getReference();
+
+        DatabaseReference user_ref = ref.child("Users");
+        user_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for (DataSnapshot snapshot : datasnapshot.getChildren()){
+                    User u = (snapshot.getValue(User.class));
+                    if(u.id.equals(name)){
+                      username.setError("Username taken!");
+                      username.requestFocus();
+                      return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("warning", "loadPost:onCancelled", error.toException());
+
+            }
+        });
+
+
         User user = new User(name, pw);
         ref.child("Users").child(name).setValue(user);
     }

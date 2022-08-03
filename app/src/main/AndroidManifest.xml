@@ -16,8 +16,10 @@
         <activity
             android:name=".login_page"
             android:exported="true" />
-        <activity android:name=".Register_page"
+        <activity
+            android:name=".Register_page"
             android:parentActivityName=".login_page">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -5,8 +5,8 @@ import com.google.firebase.database.Exclude;
 import java.util.HashSet;
 
 public class User {
-    String id;
-    String password;
+    public String id;
+    public String password;
     @Exclude
     HashSet<Event> createdEvents;
     @Exclude
