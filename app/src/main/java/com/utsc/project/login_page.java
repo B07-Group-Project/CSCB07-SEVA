@@ -49,6 +49,8 @@ public class login_page extends AppCompatActivity {
                 FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
                 ).getReference().child("Users");
 
+        // when logged in store user object in current user public static current_user()
+
         u_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot u_snapshot) {

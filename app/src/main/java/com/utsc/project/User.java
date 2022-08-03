@@ -7,10 +7,7 @@ import java.util.HashSet;
 public class User {
     public String id;
     public String password;
-    @Exclude
-    HashSet<Event> createdEvents;
-    @Exclude
-    HashSet<Event> joinedEvents;
+
 
 
     public User(){}
