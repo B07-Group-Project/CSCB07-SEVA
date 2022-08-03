@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_display_my_events.xml" value="0.25" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_my_events.xml" value="0.176" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/list_events.xml" value="0.4" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/list_my_events.xml" value="0.264" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/navigation_bar.xml" value="0.24615384615384617" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
