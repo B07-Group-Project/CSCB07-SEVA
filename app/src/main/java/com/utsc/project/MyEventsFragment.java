@@ -75,14 +75,12 @@ public class MyEventsFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
-        String uid = "DemoUser"; // need to figure out how to get user id
-
         View view = inflater.inflate(R.layout.fragment_my_events, container, false);
         recyclerView = view.findViewById(R.id.myEventsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         myEvents = new ArrayList<Event>();
-        adapter = new RecyclerAdapter(myEvents, uid);
+        adapter = new RecyclerAdapter(myEvents, Database.currentUser);
         recyclerView.setAdapter(adapter);
 
         ValueEventListener l = new ValueEventListener() {
@@ -100,7 +98,7 @@ public class MyEventsFragment extends Fragment {
                             e.addAttendee(u.id);
                         }
 
-                        if (u.id.equals(uid)) {
+                        if (u.id.equals(Database.currentUser)) {
                             joined = true;
                         }
                     }
@@ -132,8 +130,7 @@ public class MyEventsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     User u = child.getValue(User.class);
-                    if (u.id.equals("DemoUser")) { //get USERID from login class
-                        e.addAttendee(u.id);
+                    if (u.id.equals(Database.currentUser)) {                         e.addAttendee(u.id);
                         adapter.setJoined(e);
                         break;
                     }

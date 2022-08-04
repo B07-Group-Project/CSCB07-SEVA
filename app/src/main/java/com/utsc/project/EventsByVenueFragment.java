@@ -82,8 +82,7 @@ public class EventsByVenueFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         eventList = new ArrayList<Event>();
-        String uid = "DemoUser";
-        adapter = new RecyclerAdapter(eventList, uid);
+        adapter = new RecyclerAdapter(eventList, Database.currentUser);
         recyclerView.setAdapter(adapter);
 
         String message = HomeActivity.venueName;
@@ -125,7 +124,7 @@ public class EventsByVenueFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     User u = child.getValue(User.class);
-                    if (u.id.equals("DemoUser")) { //get USERID from login class
+                    if (u.id.equals(Database.currentUser)) {
                         e.addAttendee(u.id);
                         adapter.setJoined(e);
                         break;
