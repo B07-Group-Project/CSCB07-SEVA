@@ -6,7 +6,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Database {
 
+    public static String currentUser;
+
     private Database(){
+    }
+    static void setCurrentUser(String userID) {
+        currentUser = userID;
     }
     static void listVenues(ValueEventListener v) {
         DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Venues");

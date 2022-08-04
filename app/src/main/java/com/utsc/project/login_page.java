@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +36,7 @@ public class login_page extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClick(View view1){
+    public void onClickLogin(View view1){
         if(view1.getId() == R.id.upcomingEventsBackButton){
             validate_user();
         }
@@ -54,12 +55,22 @@ public class login_page extends AppCompatActivity {
         u_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot u_snapshot) {
+                boolean validLogin = false;
                 for (DataSnapshot snapshot_u : u_snapshot.getChildren()){
                     User registered = snapshot_u.getValue(User.class);
                     if(registered.id.equals(name) && registered.password.equals(pw)){
+                        validLogin = true;
+                        Database.setCurrentUser(name);
                         Intent log_in = new Intent(login_page.this, HomeActivity.class);
                         startActivity(log_in);
                     }
+                    else if(registered.id.equals(name)) {
+                        break;
+                    }
+                }
+                if (!validLogin) {
+                    username.setError("Invalid username or password!");
+                    username.requestFocus();
                 }
             }
 
@@ -71,11 +82,6 @@ public class login_page extends AppCompatActivity {
 
 
         });
-
-        username.setError("Invalid username or password!");
-        username.requestFocus();
-        return;
-
 
     }
 
