@@ -1,19 +1,30 @@
 package com.utsc.project;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.HashSet;
+
 import java.util.Objects;
 
 public class User {
     public String id;
     public String password;
-    HashSet<Event> createdEvents; //load from db on login?
-    HashSet<Event> joinedEvents; //load from db on login?
 
     public User(String id) {
         this.id = id;
-        this.createdEvents = new HashSet<>();
-        this.joinedEvents = new HashSet<>();
-        this.password = "";
+        thid.password = "";
+    }
+
+    public User() {}
+
+    public User(String username, String password){
+        this.id = username;
+        this.password = password;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
@@ -26,3 +37,4 @@ public class User {
         }
     }
 }
+

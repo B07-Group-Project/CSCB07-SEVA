@@ -5,9 +5,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 public class Database {
 
-    public static String currentUser = "default";
+    public static String currentUser;
 
     private Database(){
+    }
+    static void setCurrentUser(String userID) {
+        currentUser = userID;
     }
     static void listVenues(ValueEventListener v) {
         DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Venues");
@@ -33,5 +36,23 @@ public class Database {
             ref.child(key).child("attendees").child(Integer.toString(i)).setValue(u);
             i++;
         }
+    }
+    static void listEvents(ValueEventListener v) {
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Events");
+        ref.addValueEventListener(v);
+    }
+    static void joinEvent(int id) {
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Events/"+Integer.toString(id) + "/attendees");
+        User loggedin = new User(currentUser); //get from Login class once its done
+        ref.child(loggedin.id).setValue(loggedin);
+    }
+    static void leaveEvent(int id) {
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Events/"+Integer.toString(id) + "/attendees");
+        User loggedin = new User(currentUser); //get from Login class once its done
+        ref.child(loggedin.id).removeValue();
+    }
+    static void loadAttendees(ValueEventListener v, int id) {
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Events/"+Integer.toString(id)+"/attendees");
+        ref.addValueEventListener(v);
     }
 }

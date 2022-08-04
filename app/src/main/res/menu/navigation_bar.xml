@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/upcomingEventsItem"
+        android:icon="@drawable/ic_baseline_calendar_view_day_24"
+        android:title="@string/navBarUpcomingEvents" />
+    <item
+        android:id="@+id/myEventsItem"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_calendar_month_24"
+        android:title="@string/navBarMyEvents" />
+    <item
+        android:id="@+id/createEventItem"
+        android:icon="@drawable/ic_baseline_add_box_24"
+        android:title="@string/navBarCreateEvent" />
+</menu>
