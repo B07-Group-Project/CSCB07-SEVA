@@ -18,7 +18,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="412dp"
             android:layout_height="62dp"
             android:background="#B8B8B8"
@@ -29,7 +28,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -39,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Spinner
-            android:id="@+id/venue"
+            android:id="@+id/create_venue"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
@@ -50,7 +48,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -60,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/venue" />
 
         <Spinner
-            android:id="@+id/eventType"
+            android:id="@+id/create_eventType"
             android:layout_width="match_parent"
             android:layout_height="18dp"
             android:layout_marginStart="8dp"
@@ -72,7 +69,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -84,7 +80,7 @@
 
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/create_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -96,7 +92,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
-            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -106,7 +101,7 @@
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/create_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -115,8 +110,24 @@
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/create_event_court_title"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/create_courtno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/maxplayers_title"
@@ -129,7 +140,7 @@
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
         <EditText
-            android:id="@+id/maxplayers"
+            android:id="@+id/create_maxplayers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -138,23 +149,62 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/startdate_title"
+            android:id="@+id/create_startdate_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@string/create_event_maxpl_title"
+            android:text="@string/create_event_startdate_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
-        <EditText
-            android:id="@+id/startdate"
+        <DatePicker android:id="@+id/create_startdate"
             android:layout_width="match_parent"
+            android:layout_height="75pt"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            />
+
+        <TimePicker
+            android:id="@+id/create_starttime"
+            android:layout_width="match_parent"
+            android:timePickerMode="spinner"
+            android:layout_height="75pt"
+            />
+
+        <TextView
+            android:id="@+id/create_enddate_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="datetime"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/create_event_enddate_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <DatePicker android:id="@+id/create_enddate"
+            android:layout_width="match_parent"
+            android:layout_height="75pt"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            />
+
+        <TimePicker
+            android:id="@+id/create_endtime"
+            android:layout_width="match_parent"
+            android:timePickerMode="spinner"
+            android:layout_height="75pt"
+            />
+
+        <Button
+            android:id="@+id/create_submit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="submit"
+            android:text="@string/create_event_submit_text"
+            tools:ignore="UsingOnClickInXml" />
 
     </LinearLayout>
     </ScrollView>

@@ -1,73 +1,35 @@
 package com.utsc.project;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.HashSet;
 
 public class Event {
 
     // i think we can make these private now that we have the getters
-    int id;
-    User creator;
-    String name;
-    String description;
-    int maxPlayers;
-    String date;
-    String startTime; //might change type in future
-    String endTime;
+    public int id;
+    public String creatorID;
+    public String name;
+    public String description;
+    public int maxPlayers;
+    public long startTime;
+    public long endTime;
+    @Exclude
     HashSet<User> attendees; //should these be private?
-    Venue venue;
+    public int venueID;
+    public int courtNumber;
 
-    public Event(int id, User creator, String name, String description, int maxPlayers,
-                 String date, String startTime, String endTime, Venue venue) {
+    public Event(int id, String creatorID, String name, String description, int maxPlayers, long startTime, long endTime, int venueID, String eventType, int courtNumber) {
         this.id = id;
-        this.creator = creator;
+        this.creatorID = creatorID;
         this.name = name;
         this.description = description;
         this.maxPlayers = maxPlayers;
-        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.venue = venue;
+        this.venueID = venueID;
         this.attendees = new HashSet<>();
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public HashSet<User> getAttendees() {
-        return this.attendees;
-    }
-
-    public User getCreator() {
-        return this.creator;
-    }
-
-    public int getMaxPlayers() {
-        return this.maxPlayers;
-    }
-
-    public String getDate() {
-        return this.date;
-    }
-
-    public String getStartTime() {
-        return this.startTime;
-    }
-
-    public String getEndTime() {
-        return this.endTime;
-    }
-
-    public Venue getVenue() {
-        return this.venue;
+        this.courtNumber = courtNumber;
     }
 
     public void addAttendee(String id) {

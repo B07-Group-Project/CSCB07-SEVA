@@ -7,4 +7,11 @@
     <string name="create_event_name_hint">Name</string>
     <string name="create_event_desc_title">Description</string>
     <string name="create_event_maxpl_title">Max Players:</string>
+    <string name="create_event_startdate_title">Start Date:</string>
+    <string name="create_event_starttime_tite">Start Time:</string>
+    <string name="create_event_enddate_title">End Date:</string>
+    <string name="create_event_endtime_title">End Time:</string>
+    <string name="create_event_submit_text">Create</string>
+    <string name="create_event_court_title">Court Number:</string>
+    <string name="create_event_submitted_text">Created!</string>
 </resources>

@@ -20,6 +20,16 @@ public class Venue {
         this.eventTypes = new ArrayList<>();
     }
 
+    public static Venue getByID(ArrayList<Venue> l, int id) {
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i).id == id) {
+                return l.get(i);
+            }
+        }
+
+        return null;
+    }
+
     public Venue() {
         this.eventTypes = new ArrayList<>();
     }
