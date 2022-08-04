@@ -3,6 +3,7 @@ package com.utsc.project;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Venue {
     String name;
@@ -10,14 +11,14 @@ public class Venue {
     int courts;
 
     @Exclude
-    ArrayList<String> eventTypes;
+    HashSet<String> eventTypes;
 
 
     public Venue(String name, int id, int courts) {
         this.name = name;
         this.id = id;
         this.courts = courts;
-        this.eventTypes = new ArrayList<>();
+        this.eventTypes = new HashSet<>();
     }
 
     public static Venue getByID(ArrayList<Venue> l, int id) {
@@ -31,7 +32,7 @@ public class Venue {
     }
 
     public Venue() {
-        this.eventTypes = new ArrayList<>();
+        this.eventTypes = new HashSet<>();
     }
 
     public String getName() {

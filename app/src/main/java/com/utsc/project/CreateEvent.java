@@ -31,6 +31,12 @@ public class CreateEvent extends AppCompatActivity {
     int venueID;
     String eventType;
 
+    private void addEventType(String et) {
+        if (!eventTypes.contains(et)) {
+            eventTypes.add(et);
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class CreateEvent extends AppCompatActivity {
                         EventType eventType = eType.getValue(EventType.class);
                         assert eventType != null;
                         v.eventTypes.add(eventType.name);
-                        eventTypes.add(eventType.name);
+                        addEventType(eventType.name);
                     }
                     self.venues.add(v);
                 }
