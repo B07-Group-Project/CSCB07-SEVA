@@ -20,16 +20,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<Event> eventsList;
     private RecyclerView rv;
     String uid;
+    ArrayList<RecyclerAdapter.MyViewHolder> viewHolders;
 
     public RecyclerAdapter(ArrayList<Event> myEvents, String uid) {
         this.eventsList = myEvents;
         this.uid = uid;
+        this.viewHolders = new ArrayList<MyViewHolder>();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView eventName, creator, dateTime, description, venue, attendees;
-        private ToggleButton join_button;
-        private ImageView image;
+        public TextView eventName, creator, dateTime, description, venue, attendees;
+        public ToggleButton join_button;
+        public ImageView image;
 
         public MyViewHolder(final View view) {
             super(view);
@@ -85,11 +87,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         };
 
         holder.join_button.setOnClickListener(l);
+
+        viewHolders.add(holder);
     }
 
     @Override
     public int getItemCount() {
-        return eventsList.size();
+        if (eventsList != null) {
+            return eventsList.size();
+        }
+        return 0;
     }
 
     @Override
@@ -99,7 +106,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public void setJoined(Event e) {
         if (eventsList.contains(e)) {
-            MyViewHolder vh = (MyViewHolder) rv.findViewHolderForAdapterPosition(eventsList.indexOf(e));
+            MyViewHolder vh = (MyViewHolder) viewHolders.get(eventsList.indexOf(e));
             vh.join_button.setChecked(true);
             View.OnClickListener l = new View.OnClickListener() {
                 public void onClick(View v) {

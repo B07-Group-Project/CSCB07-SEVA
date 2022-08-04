@@ -14,18 +14,16 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link myEventsFragment#newInstance} factory method to
+ * Use the {@link MyEventsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class myEventsFragment extends Fragment {
+public class MyEventsFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
@@ -40,7 +38,7 @@ public class myEventsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public myEventsFragment() {
+    public MyEventsFragment() {
         // Required empty public constructor
     }
 
@@ -53,8 +51,8 @@ public class myEventsFragment extends Fragment {
      * @return A new instance of fragment myEventsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static myEventsFragment newInstance(String param1, String param2) {
-        myEventsFragment fragment = new myEventsFragment();
+    public static MyEventsFragment newInstance(String param1, String param2) {
+        MyEventsFragment fragment = new MyEventsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,31 +68,6 @@ public class myEventsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-    void addEventButton(Event e) {
-        ValueEventListener getJoined = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    User u = child.getValue(User.class);
-                    if (u.id.equals("DemoUser")) { //get USERID from login class
-                        e.addAttendee(u.id);
-                        adapter.setJoined(e);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        Database.loadAttendees(getJoined, e.id);
-        myEvents.add(e);
-        adapter.notifyDataSetChanged();
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,7 +89,6 @@ public class myEventsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myEvents.clear();
-                adapter.notifyDataSetChanged();
                 for (DataSnapshot eventData : snapshot.getChildren()) { // for all children under Events
                     Event e = eventData.getValue(Event.class);
 
@@ -152,6 +124,30 @@ public class myEventsFragment extends Fragment {
         Database.listEvents(l);
 
         return view;
+    }
+
+    void addEventButton(Event e) {
+        ValueEventListener getJoined = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    User u = child.getValue(User.class);
+                    if (u.id.equals("DemoUser")) { //get USERID from login class
+                        e.addAttendee(u.id);
+                        adapter.setJoined(e);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Database.loadAttendees(getJoined, e.id);
+        myEvents.add(e);
+        adapter.notifyDataSetChanged();
     }
 
 }

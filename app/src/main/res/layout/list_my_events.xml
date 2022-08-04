@@ -21,9 +21,10 @@
             android:layout_height="80dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:foreground="@drawable/ic_baseline_sports_basketball_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/ic_baseline_sports_basketball_24" />
 
         <ToggleButton
             android:id="@+id/joinToggleButton"

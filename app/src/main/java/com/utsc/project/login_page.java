@@ -36,7 +36,7 @@ public class login_page extends AppCompatActivity {
     }
 
     public void onClick(View view1){
-        if(view1.getId() == R.id.button){
+        if(view1.getId() == R.id.upcomingEventsBackButton){
             validate_user();
         }
     }
@@ -57,7 +57,7 @@ public class login_page extends AppCompatActivity {
                 for (DataSnapshot snapshot_u : u_snapshot.getChildren()){
                     User registered = snapshot_u.getValue(User.class);
                     if(registered.id.equals(name) && registered.password.equals(pw)){
-                        Intent log_in = new Intent(this, HomeActivity.class);
+                        Intent log_in = new Intent(login_page.this, HomeActivity.class);
                         startActivity(log_in);
                     }
                 }
