@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Project</string>
+    <string name="create_event_title">Create an Event</string>
+    <string name="create_event_venue_title">Venue:</string>
+    <string name="create_event_event_type_title">Event Type:</string>
+    <string name="create_event_name">Event Name:</string>
+    <string name="create_event_name_hint">Name</string>
+    <string name="create_event_desc_title">Description</string>
+    <string name="create_event_maxpl_title">Max Players:</string>
+    <string name="create_event_startdate_title">Start Date:</string>
+    <string name="create_event_starttime_tite">Start Time:</string>
+    <string name="create_event_enddate_title">End Date:</string>
+    <string name="create_event_endtime_title">End Time:</string>
+    <string name="create_event_submit_text">Create</string>
+    <string name="create_event_court_title">Court Number:</string>
+    <string name="create_event_submitted_text">Created!</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
