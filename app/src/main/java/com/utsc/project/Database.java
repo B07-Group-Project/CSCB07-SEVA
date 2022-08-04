@@ -5,7 +5,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 public class Database {
 
-    public static User currentUser = new User("default");
+    public static String currentUser = "default";
 
     private Database(){
     }

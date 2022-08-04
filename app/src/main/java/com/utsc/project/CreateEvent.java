@@ -189,11 +189,11 @@ public class CreateEvent extends AppCompatActivity {
             return;
         }
 
-        Event e = new Event(totalEvents + 1, Database.currentUser.id, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
+        Event e = new Event(totalEvents + 1, Database.currentUser, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
                 SD, ED, this.venueID, this.eventType,
                 Integer.parseInt(court.getText().toString()));
 
-        e.attendees.add(Database.currentUser);
+        e.attendees.add(new User(Database.currentUser));
 
         Database.storeEvent(e);
         Database.writeEventNumber(totalEvents + 1);
