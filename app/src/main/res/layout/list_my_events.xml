@@ -35,22 +35,8 @@
             android:text="ToggleButton"
             android:textOff="@string/buttonJoin"
             android:textOn="@string/buttonJoined"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/playerCountTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="TextView"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/joinToggleButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/joinToggleButton"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+            app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
         <TextView
             android:id="@+id/descriptionTextView"
@@ -62,46 +48,51 @@
             android:maxLines="5"
             android:minLines="1"
             android:text="TextView"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="0dp"
+            android:layout_width="243dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/joinToggleButton"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView">
 
             <TextView
-                android:id="@+id/creatorTextView"
+                android:id="@+id/playerCountTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
                 android:text="TextView"
-                android:textSize="14sp" />
+                android:textAlignment="viewStart"
+                android:textSize="16sp"
+                android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/startTimeTextView"
+                android:id="@+id/venueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
                 android:text="TextView"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/endTimeTextView"
+                android:id="@+id/courtNumTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
                 android:text="TextView"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,23 +114,32 @@
                 android:layout_marginEnd="0dp"
                 android:gravity="bottom|start"
                 android:text="TextView"
-                android:textSize="20sp" />
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/venueTextView"
+                android:id="@+id/creatorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
                 android:text="TextView"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/courtNumTextView"
+                android:id="@+id/startTimeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
                 android:text="TextView"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/endTimeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
 
