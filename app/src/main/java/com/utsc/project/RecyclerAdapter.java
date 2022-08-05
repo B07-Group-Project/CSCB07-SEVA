@@ -1,11 +1,13 @@
 package com.utsc.project;
 
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,13 +90,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             holder.join_button.setChecked(currentEvent.isAttendee(new User(this.uid)));
         }
 
-        View.OnClickListener l = new View.OnClickListener() {
-            public void onClick(View v) {
-                Database.joinEvent(currentEvent.id);
-            }
-        };
-
-        holder.join_button.setOnClickListener(l);
+        if (holder.join_button.isChecked()) {
+            holder.join_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (currentEvent.creatorID.equals(Database.currentUser)) {
+                        holder.join_button.setChecked(true);
+                        Toast.makeText(rv.getContext(), "You cannot leave your own event.", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Database.leaveEvent(currentEvent.id);
+                        holder.join_button.setChecked(false);
+                    }
+                }
+            });
+        }
+        else {
+            holder.join_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (currentEvent.getUserCount() >= currentEvent.maxPlayers) {
+                        holder.join_button.setChecked(false);
+                        Toast.makeText(rv.getContext(), "This event is full!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Database.joinEvent(currentEvent.id);
+                        holder.join_button.setChecked(true);
+                    }
+                }
+            });
+        }
 
         viewHolders.add(holder);
     }
@@ -112,31 +137,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         rv = r;
     }
 
-    public void setJoined(Event e) {
-        if (eventsList.contains(e)) {
-            MyViewHolder vh = (MyViewHolder) viewHolders.get(eventsList.indexOf(e));
-            vh.join_button.setChecked(true);
-            View.OnClickListener l = new View.OnClickListener() {
-                public void onClick(View v) {
-                    ToggleButton me = (ToggleButton) v;
-                    if (!uid.equals(e.creatorID)) {
-                        Database.leaveEvent(e.id);
-                        me.setChecked(false);
-                        View.OnClickListener l2 = new View.OnClickListener() {
-                            public void onClick(View v) {
-                                Database.joinEvent(e.id);
-                            }
-                        };
-
-                        me.setOnClickListener(l2);
-                    }
-                    else {
-                        me.setChecked(true);
-                        Toast.makeText(rv.getContext(), "You cannot leave your own event.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            };
-            vh.join_button.setOnClickListener(l);
-        }
-    }
 }

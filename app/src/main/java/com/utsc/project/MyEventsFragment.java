@@ -73,8 +73,6 @@ public class MyEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_my_events, container, false);
         recyclerView = view.findViewById(R.id.myEventsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -100,11 +98,22 @@ public class MyEventsFragment extends Fragment {
 
                         if (u.id.equals(Database.currentUser)) {
                             joined = true;
+                            myEvents.add(e);
                         }
                     }
 
                     if (joined) {
-                        addEventButton(e);
+                        Database.loadAttendees(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        }, e.id);
                     }
 
                 }
@@ -122,30 +131,6 @@ public class MyEventsFragment extends Fragment {
         Database.listEvents(l);
 
         return view;
-    }
-
-    void addEventButton(Event e) {
-        ValueEventListener getJoined = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    User u = child.getValue(User.class);
-                    if (u.id.equals(Database.currentUser)) {
-                        e.addAttendee(u.id);
-                        adapter.setJoined(e);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        Database.loadAttendees(getJoined, e.id);
-        myEvents.add(e);
-        adapter.notifyDataSetChanged();
     }
 
 }

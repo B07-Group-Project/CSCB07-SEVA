@@ -3,6 +3,7 @@ package com.utsc.project;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -95,6 +96,7 @@ public class EventsByVenueFragment extends Fragment {
                 eventList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Event e = child.getValue(Event.class);
+
                     for (DataSnapshot currentAttendee : child.child("attendees").getChildren()) {
                         User u = currentAttendee.getValue(User.class);
                         if (u != null) {
@@ -102,7 +104,18 @@ public class EventsByVenueFragment extends Fragment {
                         }
                     }
                     if (e.venueID == HomeActivity.venueID) {
-                        addEventButton(e);
+                        eventList.add(e);
+                        Database.loadAttendees(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        }, e.id);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -116,30 +129,6 @@ public class EventsByVenueFragment extends Fragment {
         Database.listEvents(listener);
 
         return view;
-    }
-
-    void addEventButton(Event e) {
-        ValueEventListener getJoined = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    User u = child.getValue(User.class);
-                    if (u.id.equals(Database.currentUser)) {
-                        e.addAttendee(u.id);
-                        adapter.setJoined(e);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        Database.loadAttendees(getJoined, e.id);
-        eventList.add(e);
-        adapter.notifyDataSetChanged();
     }
 
 }
