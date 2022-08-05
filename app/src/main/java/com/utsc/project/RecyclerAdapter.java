@@ -1,13 +1,10 @@
 package com.utsc.project;
 
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,9 +14,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
@@ -36,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView eventName, creator, dateTime, description, venue, attendees;
+        public TextView eventName, creator, startTime, endTime, description, venue, courtNumber, attendees;
         public ToggleButton join_button;
         public ImageView image;
 
@@ -45,8 +51,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             this.eventName = view.findViewById(R.id.eventNameTextView);
             this.creator = view.findViewById(R.id.creatorTextView);
-            this.dateTime = view.findViewById(R.id.dateTimeTextView);
+            this.startTime = view.findViewById(R.id.startTimeTextView);
+            this.endTime = view.findViewById(R.id.endTimeTextView);
             this.venue = view.findViewById(R.id.venueTextView);
+            this.courtNumber = view.findViewById(R.id.courtNumTextView);
             this.description = view.findViewById(R.id.descriptionTextView);
             this.attendees = view.findViewById(R.id.playerCountTextView);
             this.join_button = view.findViewById(R.id.joinToggleButton);
@@ -68,6 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Event currentEvent = eventsList.get(position);
         holder.eventName.setText(currentEvent.name);
 
+        // sets creator
         if (currentEvent.creatorID.equals(this.uid)) {
             holder.creator.setText("Created by: Me");
         }
@@ -75,13 +84,35 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             holder.creator.setText("Created by: " + currentEvent.creatorID);
         }
 
-        LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(currentEvent.startTime), ZoneId.systemDefault());
-        LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(currentEvent.endTime), ZoneId.systemDefault());
+        // sets start and end time
+        LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.startTime), ZoneId.systemDefault());
+        LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.endTime), ZoneId.systemDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm");
+        holder.startTime.setText("Start: " + start.format(formatter));
+        holder.endTime.setText("End: " + end.format(formatter));
 
-        holder.dateTime.setText(start.toString() +" to " + end.toString());
+        holder.description.setText("Description: " + currentEvent.description);
+        holder.courtNumber.setText("Court #" + currentEvent.courtNumber);
 
-        holder.description.setText(currentEvent.description);
-        holder.venue.setText("Venue: " + currentEvent.venueID);
+        Database.listVenues(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Venue v = child.getValue(Venue.class);
+                    if (v.id == currentEvent.venueID) {
+                        holder.venue.setText("Venue: " + v.name);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).maxPlayers);
         if (this.uid.equals(currentEvent.creatorID)) {
             holder.join_button.setChecked(true);

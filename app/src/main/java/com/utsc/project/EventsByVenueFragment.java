@@ -87,8 +87,8 @@ public class EventsByVenueFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         String message = HomeActivity.venueName;
-        TextView textView = view.findViewById(R.id.eventName);
-        textView.setText("Events for " + message);
+        //TextView textView = view.findViewById(R.id.eventName);
+        //textView.setText("Events for " + message);
 
         ValueEventListener listener = new ValueEventListener() {
             @Override
