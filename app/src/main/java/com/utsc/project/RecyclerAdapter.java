@@ -88,8 +88,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.startTime), ZoneId.systemDefault());
         LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.endTime), ZoneId.systemDefault());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm");
-        holder.startTime.setText("Start: " + start.format(formatter));
-        holder.endTime.setText("End: " + end.format(formatter));
+        holder.startTime.setText("Start time: " + start.format(formatter));
+        holder.endTime.setText("End time: " + end.format(formatter));
 
         holder.description.setText("Description: " + currentEvent.description);
         holder.courtNumber.setText("Court #" + currentEvent.courtNumber);

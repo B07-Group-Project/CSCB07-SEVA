@@ -47,7 +47,7 @@
             android:layout_marginEnd="16dp"
             android:maxLines="5"
             android:minLines="1"
-            android:text="TextView"
+            android:text="Description"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:text="TextView"
+                android:text="###/###"
                 android:textAlignment="viewStart"
                 android:textSize="16sp"
                 android:textStyle="normal" />
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:text="TextView"
+                android:text="Venue: SomeVenue"
                 android:textSize="12sp" />
 
             <TextView
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:text="TextView"
+                android:text="Court #"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0dp"
                 android:gravity="bottom|start"
-                android:text="TextView"
+                android:text="Event Name"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -122,21 +122,21 @@
                 android:id="@+id/creatorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Created by: User"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/startTimeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Start time: July 2"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/endTimeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="End time: July 4"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
