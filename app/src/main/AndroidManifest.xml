@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".login_page"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
