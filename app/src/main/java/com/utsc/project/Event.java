@@ -56,6 +56,7 @@ public class Event {
         return this.attendees.contains(u);
     }
 
+    @Exclude
     public int getUserCount() {
         return attendees.size();
     }
