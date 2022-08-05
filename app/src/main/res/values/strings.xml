@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project</string>
+    <string name="app_name">PROJECT</string>
     <string name="create_event_title">Create an Event</string>
     <string name="create_event_venue_title">Venue:</string>
     <string name="create_event_event_type_title">Event Type:</string>

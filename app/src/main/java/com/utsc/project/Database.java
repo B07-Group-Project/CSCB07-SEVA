@@ -22,7 +22,7 @@ public class Database {
         ref.addValueEventListener(v);
     }
 
-    static  void writeEventNumber(int i) {
+    static void writeEventNumber(int i) {
         DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("EventNumber");
         ref.setValue(i);
     }
