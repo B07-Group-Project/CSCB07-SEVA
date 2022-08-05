@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/admin_upcomingEventsItem"
+        android:icon="@drawable/ic_baseline_calendar_view_day_24"
+        android:title="Upcoming Events" />
+    <item
+        android:id="@+id/admin_addVenueItem"
+        android:icon="@drawable/ic_baseline_add_box_24"
+        android:title="Add Venue" />
+</menu>

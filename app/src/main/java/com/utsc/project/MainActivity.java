@@ -11,7 +11,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this, login_page.class);
+//        Intent intent = new Intent(this, login_page.class);
+//        startActivity(intent);
+
+        Intent intent = new Intent(this, AdminHomeActivity.class);
         startActivity(intent);
     }
 }
