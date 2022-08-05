@@ -92,7 +92,7 @@ public class MyEventsFragment extends Fragment {
 
                     boolean joined = false;
 
-                    for (DataSnapshot attendeeChild : snapshot.child(e.getId() + "/attendees").getChildren()) { // for all children under attendees
+                    for (DataSnapshot attendeeChild : snapshot.child(e.id + "/attendees").getChildren()) { // for all children under attendees
                         User u = attendeeChild.getValue(User.class);
                         if (u != null) {
                             e.addAttendee(u.id);
@@ -130,7 +130,8 @@ public class MyEventsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     User u = child.getValue(User.class);
-                    if (u.id.equals(Database.currentUser)) {                         e.addAttendee(u.id);
+                    if (u.id.equals(Database.currentUser)) {
+                        e.addAttendee(u.id);
                         adapter.setJoined(e);
                         break;
                     }

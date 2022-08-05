@@ -1,5 +1,6 @@
 package com.utsc.project;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
@@ -55,24 +60,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return new MyViewHolder(itemView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, int position) {
         Event currentEvent = eventsList.get(position);
-        holder.eventName.setText(currentEvent.getName());
+        holder.eventName.setText(currentEvent.name);
 
-        if (currentEvent.getCreatorID().equals(this.uid)) {
+        if (currentEvent.creatorID.equals(this.uid)) {
             holder.creator.setText("Created by: Me");
         }
         else {
-            holder.creator.setText("Created by: " + currentEvent.getCreatorID());
+            holder.creator.setText("Created by: " + currentEvent.creatorID);
         }
 
-        // need to update date and time display
-        holder.dateTime.setText(currentEvent.getStartTime() + " to " + currentEvent.getEndTime());
+        LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(currentEvent.startTime), ZoneId.systemDefault());
+        LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(currentEvent.endTime), ZoneId.systemDefault());
 
-        holder.description.setText(currentEvent.getDescription());
-        holder.venue.setText("Venue: " + currentEvent.getVenueID());
-        holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).getMaxPlayers());
+        holder.dateTime.setText(start.toString() +" to " + end.toString());
+
+        holder.description.setText(currentEvent.description);
+        holder.venue.setText("Venue: " + currentEvent.venueID);
+        holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).maxPlayers);
         if (this.uid.equals(currentEvent.creatorID)) {
             holder.join_button.setChecked(true);
         }
