@@ -3,6 +3,7 @@ package com.utsc.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,6 +77,7 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
                 FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
                 ).getReference();
 
+
         DatabaseReference user_ref = ref.child("Users");
         user_ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,11 +85,20 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     User u = (snapshot.getValue(User.class));
                     if(u.id.equals(name)){
-                      username.setError("Username taken!");
-                      username.requestFocus();
-                      return;
+                        if (!name.equals(Database.currentUser)) {
+                            username.setError("Username taken!");
+                            username.requestFocus();
+                        }
+                        return;
                     }
                 }
+
+                User user = new User(name, pw);
+                ref.child("Users").child(name).setValue(user);
+
+                Database.setCurrentUser(name);
+                Intent log_in = new Intent(Register_page.this, HomeActivity.class);
+                startActivity(log_in);
             }
 
             @Override
@@ -97,8 +108,5 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
             }
         });
 
-
-        User user = new User(name, pw);
-        ref.child("Users").child(name).setValue(user);
     }
 }
