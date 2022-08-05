@@ -31,10 +31,8 @@ public class Database {
         DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Events");
         String key = Integer.toString(e.id);
         ref.child(key).setValue(e);
-        int i = 0;
         for (User u : e.attendees) {
-            ref.child(key).child("attendees").child(Integer.toString(i)).setValue(u);
-            i++;
+            ref.child(key).child("attendees").child(u.id).setValue(u);
         }
     }
     static void listEvents(ValueEventListener v) {

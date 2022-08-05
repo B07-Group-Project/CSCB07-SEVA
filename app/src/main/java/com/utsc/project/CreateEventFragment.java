@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -22,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 /**
@@ -189,7 +192,69 @@ public class CreateEventFragment extends Fragment {
         endTime.setHour(d.getHour());
         endTime.setMinute(d.getMinute());
 
+        view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit(getActivity().findViewById(R.id.createPageLinearLayout));
+                HomeActivity h = (HomeActivity) getActivity();
+                h.replaceFragment(new MyEventsFragment());
+            }
+        });
         return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void submit(View v) {
+        EditText name = v.findViewById(R.id.create_name);
+        EditText desc = v.findViewById(R.id.create_description);
+        EditText court = v.findViewById(R.id.create_courtno);
+        EditText maxplayer = v.findViewById(R.id.create_maxplayers);
+        TimePicker startTime = v.findViewById(R.id.create_starttime);
+        TimePicker endTime = v.findViewById(R.id.create_endtime);
+        DatePicker startDate = v.findViewById(R.id.create_startdate);
+        DatePicker endDate = v.findViewById(R.id.create_enddate);
+
+        Button s = v.findViewById(R.id.create_submit);
+
+        // Calculate startdate
+        long SD = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth(), startTime.getHour(), startTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
+
+        // Calculate enddate
+        long ED = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDayOfMonth(), endTime.getHour(), endTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
+
+        // Verification
+        Venue venObj = Venue.getByID(this.venues, this.venueID);
+        assert venObj != null;
+        int courtNum = Integer.parseInt(court.getText().toString());
+        String buttonMessage = "";
+        if (name.getText().toString().equals("")) {
+            buttonMessage = "Fill in name";
+        } else if (maxplayer.getText().toString().equals("")) {
+            buttonMessage = "Enter max players";
+        } else if (court.getText().toString().equals("")) {
+            buttonMessage = "Enter court number";
+        } else if (courtNum > venObj.courts || courtNum < 0){
+            buttonMessage = "Invalid Court Number";
+        }
+
+        if (!buttonMessage.equals("")) {
+            s.setText(buttonMessage);
+            return;
+        }
+
+        Event e = new Event(totalEvents + 1, Database.currentUser, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
+                SD, ED, this.venueID, this.eventType,
+                Integer.parseInt(court.getText().toString()));
+
+        e.attendees.add(new User(Database.currentUser));
+
+        Database.storeEvent(e);
+        Database.writeEventNumber(totalEvents + 1);
+
+        // Disable submit button
+        s.setText(R.string.create_event_submitted_text);
+        s.setEnabled(false);
+
     }
 
     private void addEventType(String et) {
