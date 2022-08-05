@@ -197,7 +197,7 @@ public class CreateEventFragment extends Fragment {
             public void onClick(View view) {
                 submit(getActivity().findViewById(R.id.createPageLinearLayout));
                 HomeActivity h = (HomeActivity) getActivity();
-                h.replaceFragment(new MyEventsFragment());
+                h.binding.bottomNavigationView.setSelectedItemId(R.id.myEventsItem);
             }
         });
         return view;
