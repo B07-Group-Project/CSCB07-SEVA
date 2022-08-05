@@ -7,30 +7,30 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import com.utsc.project.databinding.ActivityHomeBinding;
+import com.utsc.project.databinding.ActivityAdminHomeBinding;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
-    ActivityHomeBinding binding;
+    ActivityAdminHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // default page is "My Events"
-        replaceFragment(new VenueDisplayFragment());
+        // default page is Venue Filter Display
+        replaceFragment(new AdminVenueDisplayFragment());
 
-        // selects the "My Events" icon
-        binding.bottomNavigationView.setSelectedItemId(R.id.admin_upcomingEventsItem);
+        // selects the "Upcoming Events" icon
+        binding.adminNavBarView.setSelectedItemId(R.id.admin_upcomingEventsItem);
 
         // switches fragments depending on which item the user clicked
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+        binding.adminNavBarView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.admin_upcomingEventsItem:
-                    replaceFragment(new VenueDisplayFragment());
+                    replaceFragment(new AdminVenueDisplayFragment());
                     break;
                 case R.id.admin_addVenueItem:
                     replaceFragment(new AdminAddVenueFragment());
@@ -45,7 +45,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.homeFrameLayout, fragment);
+        fragmentTransaction.replace(R.id.admin_homeFrameLayout, fragment);
         fragmentTransaction.commit();
     }
 }
