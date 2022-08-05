@@ -90,5 +90,5 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/ic_baseline_sports_football_24" />
+        app:srcCompat="@drawable/ic_baseline_sports_volleyball_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
