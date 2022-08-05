@@ -204,17 +204,14 @@ public class CreateEventFragment extends Fragment {
         view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (submit(getActivity().findViewById(R.id.createPageLinearLayout))) {
-                    HomeActivity h = (HomeActivity) getActivity();
-                    h.binding.bottomNavigationView.setSelectedItemId(R.id.myEventsItem);
-                }
+                submit(getActivity().findViewById(R.id.createPageLinearLayout));
             }
         });
         return view;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean submit(View v) {
+    public void submit(View v) {
         EditText name = v.findViewById(R.id.create_name);
         EditText desc = v.findViewById(R.id.create_description);
         EditText court = v.findViewById(R.id.create_courtno);
@@ -239,19 +236,19 @@ public class CreateEventFragment extends Fragment {
         if (name.getText().toString().equals("")) {
             name.setError("Name cannot be empty.");
             name.requestFocus();
-            return false;
+            return;
         } else if (maxplayer.getText().toString().equals("")) {
             maxplayer.setError("Max players cannot be empty.");
             maxplayer.requestFocus();
-            return false;
+            return;
         } else if (court.getText().toString().equals("")) {
             court.setError("Court number cannot be empty.");
             court.requestFocus();
-            return false;
-        } else if (courtNum > venObj.courts || courtNum < 0){   // should change court number selection to drop down menu / spinner
+            return;
+        } else if (courtNum > venObj.courts || courtNum < 0){   // delete after changing court number selection to spinner
             court.setError("Invalid court number.");
             name.requestFocus();
-            return false;
+            return;
         }
 
         Event e = new Event(totalEvents + 1, Database.currentUser, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
@@ -267,7 +264,6 @@ public class CreateEventFragment extends Fragment {
         s.setText(R.string.create_event_submitted_text);
         s.setEnabled(false);
 
-        return true;
     }
 
     private void addEventType(String et) {
