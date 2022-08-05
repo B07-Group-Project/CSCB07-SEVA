@@ -3,15 +3,14 @@ package com.utsc.project;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Venue {
-    public String name;
-    public int id;
-    public int courts;
+    public String name = "Loading...";
+    public int id = -1;
+    public int courts = -1;
 
     @Exclude
-    List<String> eventTypes = new ArrayList<String>();
+    ArrayList<String> eventTypes = new ArrayList<>();
 
 
     public Venue(String name, int id, int courts) {

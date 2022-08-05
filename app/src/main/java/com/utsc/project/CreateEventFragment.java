@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -154,6 +155,14 @@ public class CreateEventFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 venueID = venues.get(i).id;
+
+                // Populate Event Type spinner values
+
+                String [] evenTypeArray = venues.get(i).eventTypes.toArray(new String[0]);
+                ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
+                eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                et_spinner.setAdapter(eventAdapter);
             }
 
             @Override
@@ -165,7 +174,7 @@ public class CreateEventFragment extends Fragment {
         et_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                eventType = eventTypes.get(i);
+                eventType = Objects.requireNonNull(Venue.getByID(venues, venueID)).eventTypes.get(i);
             }
 
             @Override
