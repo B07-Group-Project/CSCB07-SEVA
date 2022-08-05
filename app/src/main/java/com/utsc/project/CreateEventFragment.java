@@ -195,16 +195,17 @@ public class CreateEventFragment extends Fragment {
         view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submit(getActivity().findViewById(R.id.createPageLinearLayout));
-                HomeActivity h = (HomeActivity) getActivity();
-                h.binding.bottomNavigationView.setSelectedItemId(R.id.myEventsItem);
+                if (submit(getActivity().findViewById(R.id.createPageLinearLayout))) {
+                    HomeActivity h = (HomeActivity) getActivity();
+                    h.binding.bottomNavigationView.setSelectedItemId(R.id.myEventsItem);
+                }
             }
         });
         return view;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void submit(View v) {
+    public boolean submit(View v) {
         EditText name = v.findViewById(R.id.create_name);
         EditText desc = v.findViewById(R.id.create_description);
         EditText court = v.findViewById(R.id.create_courtno);
@@ -226,20 +227,22 @@ public class CreateEventFragment extends Fragment {
         Venue venObj = Venue.getByID(this.venues, this.venueID);
         assert venObj != null;
         int courtNum = Integer.parseInt(court.getText().toString());
-        String buttonMessage = "";
         if (name.getText().toString().equals("")) {
-            buttonMessage = "Fill in name";
+            name.setError("Name cannot be empty.");
+            name.requestFocus();
+            return false;
         } else if (maxplayer.getText().toString().equals("")) {
-            buttonMessage = "Enter max players";
+            maxplayer.setError("Max players cannot be empty.");
+            maxplayer.requestFocus();
+            return false;
         } else if (court.getText().toString().equals("")) {
-            buttonMessage = "Enter court number";
-        } else if (courtNum > venObj.courts || courtNum < 0){
-            buttonMessage = "Invalid Court Number";
-        }
-
-        if (!buttonMessage.equals("")) {
-            s.setText(buttonMessage);
-            return;
+            court.setError("Court number cannot be empty.");
+            court.requestFocus();
+            return false;
+        } else if (courtNum > venObj.courts || courtNum < 0){   // should change court number selection to drop down menu / spinner
+            court.setError("Invalid court number.");
+            name.requestFocus();
+            return false;
         }
 
         Event e = new Event(totalEvents + 1, Database.currentUser, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
@@ -255,6 +258,7 @@ public class CreateEventFragment extends Fragment {
         s.setText(R.string.create_event_submitted_text);
         s.setEnabled(false);
 
+        return true;
     }
 
     private void addEventType(String et) {
