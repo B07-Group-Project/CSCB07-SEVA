@@ -38,6 +38,7 @@ public class CreateEventFragment extends Fragment {
     ArrayList<Venue> venues = new ArrayList<>();
     int totalEvents = 0;
     int venueID;
+    int courtno;
     EventType eventType;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -142,19 +143,32 @@ public class CreateEventFragment extends Fragment {
 
         Spinner venue_spinner = view.findViewById(R.id.create_venue);
         Spinner et_spinner = view.findViewById(R.id.create_eventType);
+        Spinner court_spinner = view.findViewById(R.id.create_courtno);
 
         venue_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                venueID = venues.get(i).id;
+                Venue v = venues.get(i);
+                venueID = v.id;
 
                 // Populate Event Type spinner values
 
-                EventType [] evenTypeArray = venues.get(i).eventTypes.toArray(new EventType[0]);
+                EventType [] evenTypeArray = v.eventTypes.toArray(new EventType[0]);
                 ArrayAdapter<EventType> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
                 eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 et_spinner.setAdapter(eventAdapter);
+
+                // Populate Court Spinner
+
+                String [] courtArray = new String[v.courts];
+                for (int j = 1; j <= v.courts; j++) {
+                    courtArray[j-1] = Integer.toString(j);
+                }
+                ArrayAdapter<String> courtAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, courtArray);
+                courtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                court_spinner.setAdapter(courtAdapter);
             }
 
             @Override
@@ -167,6 +181,17 @@ public class CreateEventFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 eventType = Objects.requireNonNull(Venue.getByID(venues, venueID)).eventTypes.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        court_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                courtno = i + 1;
             }
 
             @Override
@@ -206,7 +231,6 @@ public class CreateEventFragment extends Fragment {
     public void submit(View v) {
         EditText name = v.findViewById(R.id.create_name);
         EditText desc = v.findViewById(R.id.create_description);
-        EditText court = v.findViewById(R.id.create_courtno);
         EditText maxplayer = v.findViewById(R.id.create_maxplayers);
         TimePicker startTime = v.findViewById(R.id.create_starttime);
         TimePicker endTime = v.findViewById(R.id.create_endtime);
@@ -224,7 +248,6 @@ public class CreateEventFragment extends Fragment {
         // Verification
         Venue venObj = Venue.getByID(this.venues, this.venueID);
         assert venObj != null;
-        int courtNum = Integer.parseInt(court.getText().toString());
         if (name.getText().toString().equals("")) {
             name.setError("Name cannot be empty.");
             name.requestFocus();
@@ -233,19 +256,11 @@ public class CreateEventFragment extends Fragment {
             maxplayer.setError("Max players cannot be empty.");
             maxplayer.requestFocus();
             return;
-        } else if (court.getText().toString().equals("")) {
-            court.setError("Court number cannot be empty.");
-            court.requestFocus();
-            return;
-        } else if (courtNum > venObj.courts || courtNum < 0){   // delete after changing court number selection to spinner
-            court.setError("Invalid court number.");
-            name.requestFocus();
-            return;
         }
 
         Event e = new Event(totalEvents + 1, Database.currentUser, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
                 SD, ED, this.venueID, this.eventType,
-                Integer.parseInt(court.getText().toString()));
+                this.courtno);
 
         e.attendees.add(new User(Database.currentUser));
 
