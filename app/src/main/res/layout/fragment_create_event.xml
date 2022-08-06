@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="412dp"
                 android:layout_height="62dp"
                 android:background="#B8B8B8"
                 android:gravity="center"
