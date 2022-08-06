@@ -1,5 +1,6 @@
 package com.utsc.project;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -100,9 +101,9 @@ public class VenueDisplayFragment extends Fragment {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
                     for (DataSnapshot eType : dataSnapshot.child("eventTypes").getChildren()) {
-                        String eventString = eType.getValue(String.class);
+                        EventType eventString = eType.getValue(EventType.class);
+                        assert v != null;
                         v.eventTypes.add(eventString);
-                        Log.w("warning", eventString);
                     }
                     addVenueButton(v, ll);
                 }

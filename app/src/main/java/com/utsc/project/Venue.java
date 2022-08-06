@@ -10,7 +10,7 @@ public class Venue {
     public int courts = -1;
 
     @Exclude
-    ArrayList<String> eventTypes = new ArrayList<>();
+    ArrayList<EventType> eventTypes = new ArrayList<>();
 
 
     public Venue(String name, int id, int courts) {

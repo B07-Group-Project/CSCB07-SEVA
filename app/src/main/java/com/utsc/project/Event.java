@@ -1,16 +1,9 @@
 package com.utsc.project;
 
 
-import android.util.Log;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class Event {
 
@@ -25,13 +18,14 @@ public class Event {
     HashSet<User> attendees;
     public int venueID;
     public int courtNumber;
+    public EventType eventType;
 
     public Event() {
-        this.attendees = new HashSet<User>();
+        this.attendees = new HashSet<>();
     }
 
     public Event(int id, String creatorID, String name, String description, int maxPlayers,
-                 long startTime, long endTime, int venueID, String eventType, int courtNumber) {
+                 long startTime, long endTime, int venueID, EventType eventType, int courtNumber) {
         this.id = id;
         this.creatorID = creatorID;
         this.name = name;
@@ -42,6 +36,7 @@ public class Event {
         this.venueID = venueID;
         this.attendees = new HashSet<>();
         this.courtNumber = courtNumber;
+        this.eventType = eventType;
     }
 
     public void addAttendee(String id) {
