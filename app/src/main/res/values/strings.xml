@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">PROJECT</string>
+    <string name="add_venue_title">Add a Venue</string>
+    <string name="add_venue_name">Venue Name:</string>
+    <string name="add_venue_num_courts">Number of Courts:</string>
+    <string name="add_venue_event_types">Select Available Event Types:</string>
+    <string name="add_venue_name_hint">Name</string>
     <string name="create_event_title">Create an Event</string>
     <string name="create_event_venue_title">Venue:</string>
     <string name="create_event_event_type_title">Event Type:</string>
