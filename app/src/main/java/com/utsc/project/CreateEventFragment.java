@@ -36,10 +36,9 @@ import java.util.Objects;
 public class CreateEventFragment extends Fragment {
 
     ArrayList<Venue> venues = new ArrayList<>();
-    ArrayList<String> eventTypes = new ArrayList<>();
     int totalEvents = 0;
     int venueID;
-    String eventType;
+    EventType eventType;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,12 +93,10 @@ public class CreateEventFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Reset Arrays
-                eventTypes.clear();
                 venues.clear();
 
                 // Update spinner
                 Spinner venue_spinner = view.findViewById(R.id.create_venue);
-                Spinner et_spinner = view.findViewById(R.id.create_eventType);
                 ArrayList<String> venueList = new ArrayList<>();
 
                 for (DataSnapshot child : snapshot.getChildren()) {
@@ -109,21 +106,16 @@ public class CreateEventFragment extends Fragment {
                     for (DataSnapshot eType : child.child("eventTypes").getChildren()) {
                         EventType eventType = eType.getValue(EventType.class);
                         assert eventType != null;
-                        v.eventTypes.add(eventType.name);
-                        addEventType(eventType.name);
+                        v.eventTypes.add(eventType);
                     }
                     venues.add(v);
                 }
 
                 String [] venueArray =  venueList.toArray(new String[0]); // https://stackoverflow.com/questions/53284214/toarray-with-pre-sized-array
-                String [] evenTypeArray =  eventTypes.toArray(new String[0]);
                 ArrayAdapter<String> venueAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, venueArray);
                 venueAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
-                eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 venue_spinner.setAdapter(venueAdapter);
-                et_spinner.setAdapter(eventAdapter);
             }
 
             @Override
@@ -158,8 +150,8 @@ public class CreateEventFragment extends Fragment {
 
                 // Populate Event Type spinner values
 
-                String [] evenTypeArray = venues.get(i).eventTypes.toArray(new String[0]);
-                ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
+                EventType [] evenTypeArray = venues.get(i).eventTypes.toArray(new EventType[0]);
+                ArrayAdapter<EventType> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
                 eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 et_spinner.setAdapter(eventAdapter);
@@ -264,11 +256,5 @@ public class CreateEventFragment extends Fragment {
         s.setText(R.string.create_event_submitted_text);
         s.setEnabled(false);
 
-    }
-
-    private void addEventType(String et) {
-        if (!eventTypes.contains(et)) {
-            eventTypes.add(et);
-        }
     }
 }
