@@ -13,8 +13,6 @@ import com.utsc.project.databinding.ActivityHomeBinding;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static String venueName;
-    public static int venueID;
     ActivityHomeBinding binding;
 
     @Override
@@ -49,16 +47,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFrameLayout, fragment);
         fragmentTransaction.commit();
-    }
-
-    public static void setVenueData(String vName, int vID) {
-        venueName = vName;
-        venueID = vID;
     }
 
     public void goBack(View view) {

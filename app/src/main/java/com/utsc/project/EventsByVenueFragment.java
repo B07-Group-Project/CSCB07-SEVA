@@ -36,12 +36,12 @@ public class EventsByVenueFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String VENUE_NAME = "venue name";
+    private static final String VENUE_ID = "venue id";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String venueName;
+    private int venueID;
 
     public EventsByVenueFragment() {
         // Required empty public constructor
@@ -51,16 +51,16 @@ public class EventsByVenueFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param venueName Parameter 1.
+     * @param venueID Parameter 2.
      * @return A new instance of fragment UpcomingEventsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EventsByVenueFragment newInstance(String param1, String param2) {
+    public static EventsByVenueFragment newInstance(String venueName, int venueID) {
         EventsByVenueFragment fragment = new EventsByVenueFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(VENUE_NAME, venueName);
+        args.putInt(VENUE_ID, venueID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,8 +69,8 @@ public class EventsByVenueFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            venueName = getArguments().getString(VENUE_NAME);
+            venueID = getArguments().getInt(VENUE_ID);
         }
     }
 
@@ -86,7 +86,7 @@ public class EventsByVenueFragment extends Fragment {
         adapter = new RecyclerAdapter(eventList, Database.currentUser);
         recyclerView.setAdapter(adapter);
 
-        String message = HomeActivity.venueName;
+        //String message = HomeActivity.venueName;
         //TextView textView = view.findViewById(R.id.eventName);
         //textView.setText("Events for " + message);
 
@@ -103,7 +103,7 @@ public class EventsByVenueFragment extends Fragment {
                             e.addAttendee(u.id);
                         }
                     }
-                    if (e.venueID == HomeActivity.venueID) {
+                    if (e.venueID == venueID) {
                         eventList.add(e);
                         Database.loadAttendees(new ValueEventListener() {
                             @Override
