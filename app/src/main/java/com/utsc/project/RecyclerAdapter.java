@@ -33,12 +33,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<Event> eventsList;
     private RecyclerView rv;
     String uid;
-    ArrayList<RecyclerAdapter.MyViewHolder> viewHolders;
 
     public RecyclerAdapter(ArrayList<Event> myEvents, String uid) {
         this.eventsList = myEvents;
         this.uid = uid;
-        this.viewHolders = new ArrayList<MyViewHolder>();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -153,8 +151,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
             });
         }
-
-        viewHolders.add(holder);
     }
 
     @Override
