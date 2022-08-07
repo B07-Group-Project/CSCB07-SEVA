@@ -74,11 +74,11 @@ public class VenueDisplayFragment extends Fragment {
         b.setText(ve.name);
         View.OnClickListener l = new View.OnClickListener() {
             public void onClick(View v) {
-                HomeActivity.setVenueData(ve.name, ve.id);
-
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.homeFrameLayout, new EventsByVenueFragment());
+
+                fragmentTransaction.replace(R.id.homeFrameLayout, EventsByVenueFragment.newInstance(ve.name, ve.id));
+
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
