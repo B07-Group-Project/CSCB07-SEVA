@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, login_page.class);
         startActivity(intent);
 
-//        Intent intent = new Intent(this, AdminHomeActivity.class);
-//        startActivity(intent);
+        //Intent intent = new Intent(this, AdminHomeActivity.class);
+        //startActivity(intent);
     }
 }
