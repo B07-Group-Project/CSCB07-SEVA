@@ -38,6 +38,7 @@ public class login_page extends AppCompatActivity {
     public void onClickLogin(View view1){
         if(view1.getId() == R.id.upcomingEventsBackButton){
             validate_user();
+            validate_admin();
         }
     }
 
@@ -88,11 +89,6 @@ public class login_page extends AppCompatActivity {
 
     }
 
-    public void OnClickAdmin(View view2){
-        if(view2.getId() == R.id.adminbutton){
-            validate_admin();
-        }
-    }
 
     private void validate_admin() {
         String a_name = username.getText().toString().trim();
@@ -103,20 +99,14 @@ public class login_page extends AppCompatActivity {
                 ).getReference().child("Admins");
         a_ref.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot a_snapshot) {
-                boolean a_val = false;
                 for(DataSnapshot snapshot_a : a_snapshot.getChildren()){
                     User admin = snapshot_a.getValue(User.class);
                     if(admin.id.equals(a_name) && admin.password.equals(a_pw)){
-                        a_val = true;
                         Intent alogin = new Intent(login_page.this,
                                 AdminHomeActivity.class);
                         startActivity(alogin);
                     }
 
-                }
-                if(!a_val){
-                    username.setError("Invalid username or password!");
-                    username.requestFocus();
                 }
 
             }
