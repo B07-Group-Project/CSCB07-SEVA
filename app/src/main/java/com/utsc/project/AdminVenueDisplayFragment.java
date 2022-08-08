@@ -1,12 +1,24 @@
 package com.utsc.project;
 
+import android.app.usage.UsageEvents;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +67,56 @@ public class AdminVenueDisplayFragment extends Fragment {
         }
     }
 
+    void addVenueButton(Venue ve, LinearLayout ll) {
+
+        Context c = getActivity();
+        Button b = new Button(getActivity());
+        b.setText(ve.name);
+        View.OnClickListener l = new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.admin_homeFrameLayout, AdminEventsByVenueFragment.newInstance(ve.name, ve.id));
+
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+            }
+        };
+        b.setOnClickListener(l);
+        ll.addView(b);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_venue_display, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_admin_venue_display, container, false);
+        LinearLayout ll = (LinearLayout) view.findViewById(R.id.venuelistlayout);
+
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Venue v = child.getValue(Venue.class);
+                    for (DataSnapshot eType : dataSnapshot.child("eventTypes").getChildren()) {
+                        EventType eventString = eType.getValue(EventType.class);
+                        assert v != null;
+                        v.eventTypes.add(eventString);
+                    }
+                    addVenueButton(v, ll);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("warning", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Database.listVenues(listener);
+
+        return view;
     }
+
 }

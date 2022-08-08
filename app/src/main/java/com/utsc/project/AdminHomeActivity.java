@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.utsc.project.databinding.ActivityAdminHomeBinding;
 
@@ -47,5 +48,9 @@ public class AdminHomeActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.admin_homeFrameLayout, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void goBack(View view) {
+        replaceFragment(new AdminVenueDisplayFragment());
     }
 }

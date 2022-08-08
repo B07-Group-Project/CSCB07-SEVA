@@ -60,7 +60,7 @@ public class login_page extends AppCompatActivity {
                     if(registered.id.equals(name) && registered.password.equals(pw)){
                         validLogin = true;
                         Database.setCurrentUser(name);
-                        Intent log_in = new Intent(login_page.this, HomeActivity.class);
+                        Intent log_in = new Intent(login_page.this, AdminHomeActivity.class);
                         startActivity(log_in);
                     }
                     else if(registered.id.equals(name)) {
