@@ -33,16 +33,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<Event> eventsList;
     private RecyclerView rv;
     String uid;
-    ArrayList<RecyclerAdapter.MyViewHolder> viewHolders;
 
     public RecyclerAdapter(ArrayList<Event> myEvents, String uid) {
         this.eventsList = myEvents;
         this.uid = uid;
-        this.viewHolders = new ArrayList<MyViewHolder>();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView eventName, creator, startTime, endTime, description, venue, courtNumber, attendees;
+        public TextView eventName, creator, startTime, endTime, description, venue, eventType, courtNumber, attendees;
         public ToggleButton join_button;
         public ImageView image;
 
@@ -54,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.startTime = view.findViewById(R.id.startTimeTextView);
             this.endTime = view.findViewById(R.id.endTimeTextView);
             this.venue = view.findViewById(R.id.venueTextView);
+            this.eventType = view.findViewById(R.id.eventTypeTextView);
             this.courtNumber = view.findViewById(R.id.courtNumTextView);
             this.description = view.findViewById(R.id.descriptionTextView);
             this.attendees = view.findViewById(R.id.playerCountTextView);
@@ -93,6 +92,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         holder.description.setText("Description: " + currentEvent.description);
         holder.courtNumber.setText("Court #" + currentEvent.courtNumber);
+        holder.eventType.setText("Event type: ");
 
         Database.listVenues(new ValueEventListener() {
             @Override
@@ -151,8 +151,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
             });
         }
-
-        viewHolders.add(holder);
     }
 
     @Override
