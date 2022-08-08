@@ -3,11 +3,14 @@ package com.utsc.project;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -68,6 +71,44 @@ public class AdminAddVenueFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_add_venue, container, false);
 
+        recyclerView = view.findViewById(R.id.eventTypeRV);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        eTypeList = new ArrayList<String>();
+
+        adapter = new SelectEventTypeAdapter(eTypeList);
+        recyclerView.setAdapter(adapter);
+
+        // listener for when admin adds a new event type to list
+        view.findViewById(R.id.enterNewEventType).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addEventType(getActivity().findViewById(R.id.newEventTypeConstraintLayout));
+            }
+        });
+
+
         return view;
     }
+
+    public void addEventType(View v) {
+        EditText inputBox = v.findViewById(R.id.addVenue_newEventType);
+        String eType = inputBox.getText().toString();
+
+        if (eType.equals("")) {
+            inputBox.setError("Cannot be empty.");
+            inputBox.requestFocus();
+            return;
+        }
+
+        if (!adapter.selectedTypes.contains(eType)) {
+            adapter.selectedTypes.add(eType);
+        }
+        if (!adapter.eTypeList.contains(eType)) {
+            adapter.eTypeList.add(eType);
+        }
+        inputBox.setText("");
+        adapter.notifyDataSetChanged();
+    }
+
 }
