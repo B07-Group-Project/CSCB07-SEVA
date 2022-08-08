@@ -1,7 +1,9 @@
 package com.utsc.project;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -21,9 +29,11 @@ import java.util.ArrayList;
  */
 public class AdminAddVenueFragment extends Fragment {
 
-    ArrayList<String> eTypeList;
+    ArrayList<String> eTypeList = new ArrayList<>();
+    int totalVenues = -1;
     RecyclerView recyclerView;
     SelectEventTypeAdapter adapter;
+
     
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,6 +75,11 @@ public class AdminAddVenueFragment extends Fragment {
         }
     }
 
+    public void addEventTypeUniq(String e) {
+        if (this.eTypeList.contains(e)) return;
+        this.eTypeList.add(e);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +99,55 @@ public class AdminAddVenueFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addEventType(getActivity().findViewById(R.id.newEventTypeConstraintLayout));
+            }
+        });
+
+
+        AdminAddVenueFragment self = this;
+
+        ValueEventListener eventArrayUpdate = new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                self.eTypeList.clear();
+                self.totalVenues = 0;
+
+                for (DataSnapshot venue : snapshot.getChildren()) {
+                    for (String eventType : venue.child("eventTypes").getValue(String.class).split(",")) {
+                        self.addEventTypeUniq(eventType);
+                        self.totalVenues++;
+                    }
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        Database.listVenues(eventArrayUpdate);
+
+        recyclerView = view.findViewById(R.id.eventTypeRV);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        adapter = new SelectEventTypeAdapter(eTypeList);
+        recyclerView.setAdapter(adapter);
+
+        // listener for when admin adds a new event type to list
+        view.findViewById(R.id.enterNewEventType).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addEventType(getActivity().findViewById(R.id.newEventTypeConstraintLayout));
+            }
+        });
+
+        view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit(getActivity().findViewById(R.id.createPageLinearLayout));
             }
         });
 
@@ -109,6 +173,33 @@ public class AdminAddVenueFragment extends Fragment {
         }
         inputBox.setText("");
         adapter.notifyDataSetChanged();
+    }
+
+    public void submit(View v) {
+        EditText name = v.findViewById(R.id.addVenue_name);
+        EditText courts = v.findViewById(R.id.create_courtno);
+
+        // Validation
+        if (courts.getText().toString().equals("")) {
+            courts.setError("Enter number of courts");
+            courts.requestFocus();
+            return;
+        } else if (Integer.parseInt(courts.getText().toString()) < 0) {
+            courts.setError("Enter positive number of courts lol");
+            courts.requestFocus();
+            return;
+        } else if (name.getText().toString().equals("")) {
+            name.setError("Enter Venue name");
+            name.requestFocus();
+            return;
+        } else if (this.adapter.eTypeList.size() == 0) {
+            Toast.makeText(getContext(), "Enter an event type", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Venue venue = new Venue(name.getText().toString(), this.totalVenues + 1, Integer.parseInt(courts.getText().toString()));
+        venue.eventTypes.addAll(this.adapter.selectedTypes);
+        Database.storeVenue(venue);
     }
 
 }

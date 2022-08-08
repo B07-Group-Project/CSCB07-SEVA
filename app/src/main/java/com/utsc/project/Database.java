@@ -55,4 +55,15 @@ public class Database {
         DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Events/"+Integer.toString(id)+"/attendees");
         ref.addValueEventListener(v);
     }
+
+    static void storeVenue(Venue v) {
+        DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Venues");
+        ref.child(Integer.toString(v.id)).setValue(v);
+        // Store eventTypes
+        StringBuilder etstring = new StringBuilder();
+        for (String et : v.eventTypes) {
+            etstring.append(et).append(",");
+        }
+        ref.child(Integer.toString(v.id)).child("eventTypes").setValue(etstring);
+    }
 }

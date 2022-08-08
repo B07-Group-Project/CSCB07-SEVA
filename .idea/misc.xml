@@ -3,27 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_admin_home.xml" value="0.25" />
+        <entry key="..\:/Users/72898/OneDrive/Documents/GitHub/Project/app/src/main/res/layout/activity_admin_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/72898/OneDrive/Documents/GitHub/Project/app/src/main/res/layout/activity_login_page.xml" value="0.264" />
+        <entry key="..\:/Users/72898/OneDrive/Documents/GitHub/Project/app/src/main/res/layout/activity_main.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/72898/OneDrive/Documents/GitHub/Project/app/src/main/res/layout/fragment_create_event.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/Faraz Malik/Documents/Project/app/src/main/res/layout/fragment_admin_add_venue.xml" value="0.33" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_create_event.xml" value="0.2" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_display_my_events.xml" value="0.25" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_event_details.xml" value="0.176" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_login_page.xml" value="0.264" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_register_page.xml" value="0.1" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_venue_display.xml" value="0.1" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/event_type_checkbox.xml" value="0.25" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_add_venue.xml" value="0.25" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_admin_add_venue.xml" value="0.33101851851851855" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_admin_venue_display.xml" value="0.25" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_create_event.xml" value="0.264" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_my_events.xml" value="0.176" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_upcoming_events.xml" value="0.25" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_venue_display.xml" value="0.25" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/list_events.xml" value="0.4" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/list_my_events.xml" value="0.4" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/admin_nav_bar.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/navigation_bar.xml" value="0.24615384615384617" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/user_navigation_bar.xml" value="0.25" />
       </map>
     </option>
   </component>

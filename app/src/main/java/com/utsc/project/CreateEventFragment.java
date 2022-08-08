@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -255,6 +256,9 @@ public class CreateEventFragment extends Fragment {
         } else if (maxplayer.getText().toString().equals("")) {
             maxplayer.setError("Max players cannot be empty.");
             maxplayer.requestFocus();
+            return;
+        } else if (SD > ED) {
+            Toast.makeText(getContext(), "Start date cannot be after end date", Toast.LENGTH_SHORT).show();
             return;
         }
 
