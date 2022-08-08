@@ -12,10 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent(this, login_page.class);
-        //startActivity(intent);
-
-        Intent intent = new Intent(this, AdminHomeActivity.class);
+        Intent intent = new Intent(this, login_page.class);
         startActivity(intent);
     }
 }

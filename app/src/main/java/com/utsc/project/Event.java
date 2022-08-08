@@ -18,14 +18,14 @@ public class Event {
     HashSet<User> attendees;
     public int venueID;
     public int courtNumber;
-    public EventType eventType;
+    public String eventType;
 
     public Event() {
         this.attendees = new HashSet<>();
     }
 
     public Event(int id, String creatorID, String name, String description, int maxPlayers,
-                 long startTime, long endTime, int venueID, EventType eventType, int courtNumber) {
+                 long startTime, long endTime, int venueID, String eventType, int courtNumber) {
         this.id = id;
         this.creatorID = creatorID;
         this.name = name;
