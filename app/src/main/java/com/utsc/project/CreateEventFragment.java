@@ -39,7 +39,7 @@ public class CreateEventFragment extends Fragment {
     int totalEvents = 0;
     int venueID;
     int courtno;
-    EventType eventType;
+    String eventType;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,12 +103,10 @@ public class CreateEventFragment extends Fragment {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
                     assert v != null;
-                    venueList.add(v.name);
-                    for (DataSnapshot eType : child.child("eventTypes").getChildren()) {
-                        EventType eventType = eType.getValue(EventType.class);
-                        assert eventType != null;
-                        v.eventTypes.add(eventType);
+                    for (String eType : child.child("eventTypes").getValue(String.class).split(",")) {
+                        v.eventTypes.add(eType);
                     }
+                    venueList.add(v.name);
                     venues.add(v);
                 }
 
@@ -153,8 +151,8 @@ public class CreateEventFragment extends Fragment {
 
                 // Populate Event Type spinner values
 
-                EventType [] evenTypeArray = v.eventTypes.toArray(new EventType[0]);
-                ArrayAdapter<EventType> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
+                String [] evenTypeArray = v.eventTypes.toArray(new String[0]);
+                ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
                 eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 et_spinner.setAdapter(eventAdapter);
@@ -255,6 +253,9 @@ public class CreateEventFragment extends Fragment {
         } else if (maxplayer.getText().toString().equals("")) {
             maxplayer.setError("Max players cannot be empty.");
             maxplayer.requestFocus();
+            return;
+        } else if (ED < SD) {
+            s.setError("Start date must be later than end date");
             return;
         }
 
