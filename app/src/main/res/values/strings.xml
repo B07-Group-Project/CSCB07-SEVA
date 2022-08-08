@@ -6,6 +6,8 @@
     <string name="add_venue_event_types">Select Event Types:</string>
     <string name="add_venue_name_hint">Name</string>
     <string name="add_venue_event_type_not_listed">Event type not listed? Add new event type to list:</string>
+    <string name="add_venue_submit">Add Venue</string>
+    <string name="add_venue_submitted">Added!</string>
     <string name="enter_message">Enter</string>
     <string name="create_event_title">Create an Event</string>
     <string name="create_event_venue_title">Venue:</string>
