@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +41,7 @@ public class login_page extends AppCompatActivity {
         }
     }
 
+
     private void validate_user() {
         String name = username.getText().toString().trim();
         String pw = password.getText().toString().trim();
@@ -51,7 +51,6 @@ public class login_page extends AppCompatActivity {
                 ).getReference().child("Users");
 
         // when logged in store user object in current user public static current_user()
-        
         u_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot u_snapshot) {
@@ -74,6 +73,10 @@ public class login_page extends AppCompatActivity {
                 }
             }
 
+
+
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("warning", "loadPost:onCancelled", error.toException());
@@ -84,5 +87,49 @@ public class login_page extends AppCompatActivity {
         });
 
     }
+
+    public void OnClickAdmin(View view2){
+        if(view2.getId() == R.id.adminbutton){
+            validate_admin();
+        }
+    }
+
+    private void validate_admin() {
+        String a_name = username.getText().toString().trim();
+        String a_pw = password.getText().toString().trim();
+
+        DatabaseReference a_ref =
+                FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
+                ).getReference().child("Admins");
+        a_ref.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot a_snapshot) {
+                boolean a_val = false;
+                for(DataSnapshot snapshot_a : a_snapshot.getChildren()){
+                    User admin = snapshot_a.getValue(User.class);
+                    if(admin.id.equals(a_name) && admin.password.equals(a_pw)){
+                        a_val = true;
+                        Intent alogin = new Intent(login_page.this,
+                                AdminHomeActivity.class);
+                        startActivity(alogin);
+                    }
+
+                }
+                if(!a_val){
+                    username.setError("Invalid username or password!");
+                    username.requestFocus();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error_a) {
+                Log.w("warning", "loadPost:onCancelled", error_a.toException());
+
+            }
+        });
+
+
+    }
+
 
 }
