@@ -74,13 +74,13 @@ public class AdminRecyclerAdapter extends RecyclerView.Adapter<AdminRecyclerAdap
         // sets start and end time
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.startTime), ZoneId.systemDefault());
         LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.endTime), ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy, h:mm a");
         holder.startTime.setText("Start time: " + start.format(formatter));
         holder.endTime.setText("End time: " + end.format(formatter));
 
         holder.description.setText("Description: " + currentEvent.description);
         holder.courtNumber.setText("Court #" + currentEvent.courtNumber);
-        holder.eventType.setText("Event type: ");
+        holder.eventType.setText("Event type: " + currentEvent.eventType);
 
         Database.listVenues(new ValueEventListener() {
             @Override
