@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
@@ -111,11 +112,15 @@ public class AdminAddVenueFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 self.eTypeList.clear();
                 self.totalVenues = 0;
+                String eventTypesCSL;
 
                 for (DataSnapshot venue : snapshot.getChildren()) {
-                    for (String eventType : venue.child("eventTypes").getValue(String.class).split(",")) {
-                        self.addEventTypeUniq(eventType);
-                        self.totalVenues++;
+                    self.totalVenues++;
+                    eventTypesCSL = venue.child("eventTypes").getValue(String.class);
+                    if (eventTypesCSL != null) { // Feedback loop may be triggered on new event created - just ignore it
+                        for (String eventType : venue.child("eventTypes").getValue(String.class).split(",")) {
+                            self.addEventTypeUniq(eventType);
+                        }
                     }
                 }
 
@@ -144,10 +149,10 @@ public class AdminAddVenueFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.addVenue_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submit(getActivity().findViewById(R.id.createPageLinearLayout));
+                submit(getActivity().findViewById(R.id.addVenue_scrollView));
             }
         });
 
@@ -177,7 +182,7 @@ public class AdminAddVenueFragment extends Fragment {
 
     public void submit(View v) {
         EditText name = v.findViewById(R.id.addVenue_name);
-        EditText courts = v.findViewById(R.id.create_courtno);
+        EditText courts = v.findViewById(R.id.addVenue_courtNo);
 
         // Validation
         if (courts.getText().toString().equals("")) {
@@ -200,6 +205,10 @@ public class AdminAddVenueFragment extends Fragment {
         Venue venue = new Venue(name.getText().toString(), this.totalVenues + 1, Integer.parseInt(courts.getText().toString()));
         venue.eventTypes.addAll(this.adapter.selectedTypes);
         Database.storeVenue(venue);
+
+        Button b = v.findViewById(R.id.addVenue_submit);
+        b.setEnabled(false);
+        b.setText(R.string.add_venue_submitted);
     }
 
 }

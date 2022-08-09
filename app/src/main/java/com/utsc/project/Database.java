@@ -64,6 +64,6 @@ public class Database {
         for (String et : v.eventTypes) {
             etstring.append(et).append(",");
         }
-        ref.child(Integer.toString(v.id)).child("eventTypes").setValue(etstring);
+        ref.child(Integer.toString(v.id)).child("eventTypes").setValue(etstring.toString());
     }
 }
