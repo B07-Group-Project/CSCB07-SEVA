@@ -1,5 +1,6 @@
 package com.utsc.project;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,11 +88,16 @@ public class AdminEventsByVenueFragment extends Fragment {
         //textView.setText("Events for " + message);
 
         ValueEventListener listener = new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 eventList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Event e = child.getValue(Event.class);
+
+                    if (e.isOver()) {
+                        continue;
+                    }
 
                     for (DataSnapshot currentAttendee : child.child("attendees").getChildren()) {
                         User u = currentAttendee.getValue(User.class);

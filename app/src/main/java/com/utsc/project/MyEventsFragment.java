@@ -1,8 +1,10 @@
 package com.utsc.project;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -83,11 +87,16 @@ public class MyEventsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         ValueEventListener l = new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myEvents.clear();
                 for (DataSnapshot eventData : snapshot.getChildren()) { // for all children under Events
                     Event e = eventData.getValue(Event.class);
+
+                    if (e.isOver()) {
+                        continue;
+                    }
 
                     boolean joined = false;
 
