@@ -5,7 +5,7 @@ import com.google.firebase.database.Exclude;
 
 import java.util.HashSet;
 
-public class Event {
+public class Event implements Comparable<Event>{
 
     public int id;
     public String creatorID;
@@ -69,5 +69,16 @@ public class Event {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Event event) { // compares based on start time
+        if (this.startTime == event.startTime) {
+            return 0;
+        }
+        else if (this.startTime < event.startTime) {
+            return -1;
+        }
+        return 1;
     }
 }

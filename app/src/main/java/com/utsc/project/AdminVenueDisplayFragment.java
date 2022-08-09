@@ -100,9 +100,8 @@ public class AdminVenueDisplayFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
-                    for (DataSnapshot eType : dataSnapshot.child("eventTypes").getChildren()) {
-                        EventType eventString = eType.getValue(EventType.class);
-                        assert v != null;
+                    assert v != null;
+                    for (String eventString : child.child("eventTypes").getValue(String.class).split(",")) {
                         v.eventTypes.add(eventString);
                     }
                     addVenueButton(v, ll);
