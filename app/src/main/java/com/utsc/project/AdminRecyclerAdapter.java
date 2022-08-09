@@ -14,12 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.Instant;
@@ -28,15 +24,13 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+public class AdminRecyclerAdapter extends RecyclerView.Adapter<AdminRecyclerAdapter.MyViewHolder> {
 
     private ArrayList<Event> eventsList;
     private RecyclerView rv;
-    String uid;
 
-    public RecyclerAdapter(ArrayList<Event> myEvents, String uid) {
+    public AdminRecyclerAdapter(ArrayList<Event> myEvents) {
         this.eventsList = myEvents;
-        this.uid = uid;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -64,24 +58,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     @NonNull
     @Override
-    public RecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_my_events, parent, false);
+    public AdminRecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_list_my_events, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdminRecyclerAdapter.MyViewHolder holder, int position) {
         Event currentEvent = eventsList.get(position);
         holder.eventName.setText(currentEvent.name);
 
-        // sets creator
-        if (currentEvent.creatorID.equals(this.uid)) {
-            holder.creator.setText("Created by: Me");
-        }
-        else {
-            holder.creator.setText("Created by: " + currentEvent.creatorID);
-        }
+        holder.creator.setText("Created by: " + currentEvent.creatorID);
 
         // sets start and end time
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochSecond(currentEvent.startTime), ZoneId.systemDefault());
@@ -114,43 +102,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         });
 
         holder.attendees.setText(currentEvent.getUserCount() + "/" + eventsList.get(position).maxPlayers);
-        if (this.uid.equals(currentEvent.creatorID)) {
-            holder.join_button.setChecked(true);
-        }
-        else {
-            holder.join_button.setChecked(currentEvent.isAttendee(new User(this.uid)));
-        }
-
-        if (holder.join_button.isChecked()) {
-            holder.join_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (currentEvent.creatorID.equals(Database.currentUser)) {
-                        holder.join_button.setChecked(true);
-                        Toast.makeText(rv.getContext(), "You cannot leave your own event.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Database.leaveEvent(currentEvent.id);
-                        holder.join_button.setChecked(false);
-                    }
-                }
-            });
-        }
-        else {
-            holder.join_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (currentEvent.getUserCount() >= currentEvent.maxPlayers) {
-                        holder.join_button.setChecked(false);
-                        Toast.makeText(rv.getContext(), "This event is full!", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Database.joinEvent(currentEvent.id);
-                        holder.join_button.setChecked(true);
-                    }
-                }
-            });
-        }
     }
 
     @Override

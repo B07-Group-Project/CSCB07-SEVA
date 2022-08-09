@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,21 +40,48 @@ public class login_page extends AppCompatActivity {
             validate_user();
         }
     }
+    public boolean validLogin = false;
 
     private void validate_user() {
         String name = username.getText().toString().trim();
         String pw = password.getText().toString().trim();
+        String a_name = username.getText().toString().trim();
+        String a_pw = password.getText().toString().trim();
+
+        DatabaseReference a_ref =
+                FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
+                ).getReference().child("Admins");
 
         DatabaseReference u_ref =
                 FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
                 ).getReference().child("Users");
 
+        a_ref.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot a_snapshot){
+                for(DataSnapshot snapshot_a : a_snapshot.getChildren()){
+                    User admin = snapshot_a.getValue(User.class);
+                    if(admin.id.equals(a_name) && admin.password.equals(a_pw)){
+                        validLogin = true;
+                        Intent alogin = new Intent(login_page.this,
+                                AdminHomeActivity.class);
+                        startActivity(alogin);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error_a) {
+                Log.w("warning", "loadPost:onCancelled", error_a.toException());
+
+            }
+        });
+
         // when logged in store user object in current user public static current_user()
-        
         u_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot u_snapshot) {
-                boolean validLogin = false;
                 for (DataSnapshot snapshot_u : u_snapshot.getChildren()){
                     User registered = snapshot_u.getValue(User.class);
                     if(registered.id.equals(name) && registered.password.equals(pw)){
@@ -74,6 +100,10 @@ public class login_page extends AppCompatActivity {
                 }
             }
 
+
+
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("warning", "loadPost:onCancelled", error.toException());
@@ -84,5 +114,10 @@ public class login_page extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
 
 }

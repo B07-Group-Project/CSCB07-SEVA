@@ -1,11 +1,19 @@
 package com.utsc.project;
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.firebase.database.Exclude;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
-public class Event {
+public class Event implements Comparable<Event>{
 
     public int id;
     public String creatorID;
@@ -69,5 +77,25 @@ public class Event {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Event event) { // compares based on start time
+        if (this.startTime == event.startTime) {
+            return 0;
+        }
+        else if (this.startTime < event.startTime) {
+            return -1;
+        }
+        return 1;
+    }
+
+    @Exclude
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean isOver() {
+        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime scheduledEnd = LocalDateTime.ofInstant(Instant.ofEpochSecond(this.endTime), ZoneId.systemDefault());
+
+        return scheduledEnd.isBefore(current);
     }
 }
