@@ -211,10 +211,10 @@ public class CreateEventFragment extends Fragment {
         TimePicker startTime = view.findViewById(R.id.create_starttime);
         TimePicker endTime = view.findViewById(R.id.create_endtime);
 
-        startTime.setHour(d.getHour());
-        startTime.setMinute(d.getMinute());
-        endTime.setHour(d.getHour());
-        endTime.setMinute(d.getMinute());
+        startTime.setHour(d.getHour() + 1);
+        startTime.setMinute(0);
+        endTime.setHour(d.getHour() + 2);
+        endTime.setMinute(0);
 
         view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,10 +238,10 @@ public class CreateEventFragment extends Fragment {
         Button s = v.findViewById(R.id.create_submit);
 
         // Calculate startdate
-        long SD = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth(), startTime.getHour(), startTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
+        long SD = LocalDateTime.of(startDate.getYear(), startDate.getMonth() + 1, startDate.getDayOfMonth(), startTime.getHour(), startTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
 
         // Calculate enddate
-        long ED = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDayOfMonth(), endTime.getHour(), endTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
+        long ED = LocalDateTime.of(endDate.getYear(), endDate.getMonth() + 1, endDate.getDayOfMonth(), endTime.getHour(), endTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
 
         // Verification
         Venue venObj = Venue.getByID(this.venues, this.venueID);

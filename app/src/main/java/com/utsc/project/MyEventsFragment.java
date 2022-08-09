@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -118,6 +119,7 @@ public class MyEventsFragment extends Fragment {
 
                 }
 
+                Collections.sort(myEvents);
                 adapter.notifyDataSetChanged();
 
             }
