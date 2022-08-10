@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -128,7 +129,15 @@ public class MyEventsFragment extends Fragment {
 
                 }
 
-                Collections.sort(myEvents);
+                // checks when to display the no events message
+                TextView tv = view.findViewById(R.id.myEventsNoEvents);
+                if (myEvents.isEmpty()) {
+                    tv.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tv.setVisibility(View.GONE);
+                    Collections.sort(myEvents);
+                }
                 adapter.notifyDataSetChanged();
 
             }

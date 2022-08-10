@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class EventsByVenueFragment extends Fragment {
@@ -118,6 +119,16 @@ public class EventsByVenueFragment extends Fragment {
                             }
                         }, e.id);
                     }
+                }
+
+                // checks when to display the no events message
+                TextView tv = view.findViewById(R.id.userVenueNoEvents);
+                if (eventList.isEmpty()) {
+                    tv.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tv.setVisibility(View.GONE);
+                    Collections.sort(eventList);
                 }
                 adapter.notifyDataSetChanged();
             }

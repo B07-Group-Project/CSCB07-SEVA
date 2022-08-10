@@ -46,6 +46,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         // switches fragments depending on which item the user clicked
         binding.adminNavBarView.setOnItemSelectedListener(item -> {
 
+            binding.adminToolbar.setNavigationIcon(null);
             switch (item.getItemId()) {
                 case R.id.admin_upcomingEventsItem:
                     binding.adminToolbar.setTitle("Upcoming Events by Venue");

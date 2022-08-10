@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         // switches fragments depending on which item the user clicked
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
+            binding.userToolbar.setNavigationIcon(null);
             switch (item.getItemId()) {
                 case R.id.upcomingEventsItem:
                     binding.userToolbar.setTitle("Upcoming Events by Venue");
