@@ -44,7 +44,11 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public boolean taken;
+
     private void register_user() {
+        taken = false;
+
         String name = username.getText().toString().trim();
         String pw = password.getText().toString().trim();
         String cpw = c_password.getText().toString().trim();
@@ -77,6 +81,26 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                 FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
                 ).getReference();
 
+        DatabaseReference admin_ref = ref.child("Admins");
+        admin_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()){
+                    User u = (child.getValue(User.class));
+                    if(u.id.equals(name)){
+                        taken = true;
+                        username.setError("Username taken!");
+                        username.requestFocus();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         DatabaseReference user_ref = ref.child("Users");
         user_ref.addValueEventListener(new ValueEventListener() {
@@ -85,20 +109,23 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     User u = (snapshot.getValue(User.class));
                     if(u.id.equals(name)){
-                        if (!name.equals(Database.currentUser)) {
-                            username.setError("Username taken!");
-                            username.requestFocus();
-                        }
+                        taken = true;
+                        username.setError("Username taken!");
+                        username.requestFocus();
                         return;
                     }
                 }
 
-                User user = new User(name, pw);
-                ref.child("Users").child(name).setValue(user);
-                Database.setCurrentUser(name);
-                
-                Intent log_in = new Intent(RegisterPage.this, HomeActivity.class);
-                startActivity(log_in);
+                if (!taken) {
+                    User user = new User(name, pw);
+                    user_ref.removeEventListener(this);
+                    ref.child("Users").child(name).setValue(user);
+                    Database.setCurrentUser(name);
+
+                    Intent log_in = new Intent(RegisterPage.this, HomeActivity.class);
+                    startActivity(log_in);
+                }
+
             }
 
             @Override
