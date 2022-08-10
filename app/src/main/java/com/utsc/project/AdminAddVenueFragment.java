@@ -128,7 +128,7 @@ public class AdminAddVenueFragment extends Fragment {
 
     public void addEventType(View v) {
         EditText inputBox = v.findViewById(R.id.addVenue_newEventType);
-        String eType = inputBox.getText().toString();
+        String eType = inputBox.getText().toString().trim();
 
         if (eType.equals("")) {
             inputBox.setError("Cannot be empty.");

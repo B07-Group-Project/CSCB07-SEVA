@@ -1,5 +1,6 @@
 package com.utsc.project;
 
+import android.annotation.SuppressLint;
 import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
@@ -70,14 +71,16 @@ public class VenueDisplayFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 venueList.clear();
+                ll.removeAllViews();
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
-                    assert v != null;
-                    for (String eventString : child.child("eventTypes").getValue(String.class).split(",")) {
-                        v.eventTypes.add(eventString);
+                    if (v != null && child.child("eventTypes").getValue(String.class) != null) {
+                        for (String eventString : child.child("eventTypes").getValue(String.class).split(",")) {
+                            v.eventTypes.add(eventString);
+                        }
+                        venueList.add(v);
                     }
-                    venueList.add(v);
                 }
 
 
