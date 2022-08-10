@@ -220,8 +220,8 @@ public class CreateEventFragment extends Fragment {
             maxplayer.setError("Max players cannot be empty.");
             maxplayer.requestFocus();
             return;
-        } else if (SD > ED) {
-            Toast.makeText(getContext(), "Start date cannot be after end date", Toast.LENGTH_SHORT).show();
+        } else if (SD >= ED) {
+            Toast.makeText(getContext(), "Start time must be before end time", Toast.LENGTH_SHORT).show();
             return;
         }
 
