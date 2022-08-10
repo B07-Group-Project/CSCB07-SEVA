@@ -12,11 +12,13 @@ import java.util.ArrayList;
 
 public class SelectEventTypeAdapter extends RecyclerView.Adapter<SelectEventTypeAdapter.MyViewHolder> {
 
-    private ArrayList<String> eTypeList;
+    public ArrayList<String> eTypeList;
+    public ArrayList<String> selectedTypes;
     private RecyclerView rv;
 
     public SelectEventTypeAdapter(ArrayList<String> eTypeList) {
         this.eTypeList = eTypeList;
+        this.selectedTypes = new ArrayList<String>();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -31,7 +33,7 @@ public class SelectEventTypeAdapter extends RecyclerView.Adapter<SelectEventType
     @NonNull
     @Override
     public SelectEventTypeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_my_events, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_type_checkbox, parent, false);
         return new SelectEventTypeAdapter.MyViewHolder(itemView);
     }
 
@@ -39,6 +41,28 @@ public class SelectEventTypeAdapter extends RecyclerView.Adapter<SelectEventType
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String type = eTypeList.get(position);
         holder.checkBox.setText(type);
+
+        if (selectedTypes.contains(type)) {
+            holder.checkBox.setChecked(true);
+        }
+        else {
+            holder.checkBox.setChecked(false);
+        }
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.checkBox.isChecked()) {
+                    if (!selectedTypes.contains(type)) {
+                        selectedTypes.add(type);
+                    }
+                }
+                else {
+                    selectedTypes.remove(type);
+                }
+            }
+        });
+
     }
 
     @Override

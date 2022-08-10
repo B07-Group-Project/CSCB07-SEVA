@@ -1,9 +1,13 @@
 package com.utsc.project;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,25 +25,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EventsByVenueFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EventsByVenueFragment extends Fragment {
 
     ArrayList<Event> eventList;
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String VENUE_NAME = "venue name";
     private static final String VENUE_ID = "venue id";
 
-    // TODO: Rename and change types of parameters
     private String venueName;
     private int venueID;
 
@@ -47,15 +44,6 @@ public class EventsByVenueFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param venueName Parameter 1.
-     * @param venueID Parameter 2.
-     * @return A new instance of fragment UpcomingEventsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static EventsByVenueFragment newInstance(String venueName, int venueID) {
         EventsByVenueFragment fragment = new EventsByVenueFragment();
         Bundle args = new Bundle();
@@ -79,6 +67,19 @@ public class EventsByVenueFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_upcoming_events, container, false);
+
+        // creates back button to go back to venue display
+        Toolbar toolbar = ((HomeActivity) getActivity()).binding.userToolbar;
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolbar.setNavigationIcon(null);
+                toolbar.setTitle("Upcoming Events by Venue");
+                getActivity().onBackPressed();
+            }
+        });
+
         recyclerView = view.findViewById(R.id.eventsRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -86,16 +87,17 @@ public class EventsByVenueFragment extends Fragment {
         adapter = new RecyclerAdapter(eventList, Database.currentUser);
         recyclerView.setAdapter(adapter);
 
-        //String message = HomeActivity.venueName;
-        //TextView textView = view.findViewById(R.id.eventName);
-        //textView.setText("Events for " + message);
-
         ValueEventListener listener = new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 eventList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Event e = child.getValue(Event.class);
+
+                    if (e.isOver()) {
+                        continue;
+                    }
 
                     for (DataSnapshot currentAttendee : child.child("attendees").getChildren()) {
                         User u = currentAttendee.getValue(User.class);
@@ -117,6 +119,16 @@ public class EventsByVenueFragment extends Fragment {
                             }
                         }, e.id);
                     }
+                }
+
+                // checks when to display the no events message
+                TextView tv = view.findViewById(R.id.userVenueNoEvents);
+                if (eventList.isEmpty()) {
+                    tv.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tv.setVisibility(View.GONE);
+                    Collections.sort(eventList);
                 }
                 adapter.notifyDataSetChanged();
             }

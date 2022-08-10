@@ -1,18 +1,24 @@
 <resources>
-    <string name="app_name">PROJECT</string>
+    <string name="app_name">SEVA</string>
+    <string name="return_to_login">RETURN TO LOGIN</string>
+    <string name="log_out">Log out</string>
+    <string name="user_no_events">You don\'t have any upcoming events :(</string>
+    <string name="venue_no_events">There are no upcoming events for this venue.</string>
     <string name="add_venue_title">Add a Venue</string>
     <string name="add_venue_name">Venue Name:</string>
     <string name="add_venue_num_courts">Number of Courts:</string>
     <string name="add_venue_event_types">Select Event Types:</string>
     <string name="add_venue_name_hint">Name</string>
     <string name="add_venue_event_type_not_listed">Event type not listed? Add new event type to list:</string>
+    <string name="add_venue_submit">Add Venue</string>
+    <string name="add_venue_submitted">Added!</string>
     <string name="enter_message">Enter</string>
     <string name="create_event_title">Create an Event</string>
     <string name="create_event_venue_title">Venue:</string>
     <string name="create_event_event_type_title">Event Type:</string>
     <string name="create_event_name">Event Name:</string>
     <string name="create_event_name_hint">Name</string>
-    <string name="create_event_desc_title">Description</string>
+    <string name="create_event_desc_title">Description:</string>
     <string name="create_event_maxpl_title">Max Players:</string>
     <string name="create_event_startdate_title">Start Date:</string>
     <string name="create_event_starttime_tite">Start Time:</string>

@@ -7,6 +7,7 @@
     tools:context=".MyEventsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myEventsRecyclerView"
         android:layout_width="match_parent"
@@ -15,5 +16,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/myEventsNoEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center|center_horizontal"
+        android:text="@string/user_no_events"
+        android:textColor="#9C9C9C"
+        android:textSize="16sp" />
 
 </FrameLayout>

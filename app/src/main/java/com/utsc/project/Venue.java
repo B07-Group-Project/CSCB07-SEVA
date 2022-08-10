@@ -3,14 +3,15 @@ package com.utsc.project;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Venue {
+public class Venue implements Comparable<Venue>{
     public String name = "Loading...";
     public int id = -1;
     public int courts = -1;
 
     @Exclude
-    ArrayList<EventType> eventTypes = new ArrayList<>();
+    ArrayList<String> eventTypes = new ArrayList<>();
 
 
     public Venue(String name, int id, int courts) {
@@ -31,4 +32,10 @@ public class Venue {
 
     public Venue() {
     }
+
+    @Override
+    public int compareTo(Venue venue) {
+        return this.name.compareTo(venue.name);
+    }
+
 }

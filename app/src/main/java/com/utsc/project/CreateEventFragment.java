@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,57 +30,21 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateEventFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreateEventFragment extends Fragment {
 
     ArrayList<Venue> venues = new ArrayList<>();
     int totalEvents = 0;
     int venueID;
-    int courtno;
-    EventType eventType;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    int courtNo;
+    String eventType;
 
     public CreateEventFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment createEventFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CreateEventFragment newInstance(String param1, String param2) {
-        CreateEventFragment fragment = new CreateEventFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -103,12 +69,10 @@ public class CreateEventFragment extends Fragment {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
                     assert v != null;
-                    venueList.add(v.name);
-                    for (DataSnapshot eType : child.child("eventTypes").getChildren()) {
-                        EventType eventType = eType.getValue(EventType.class);
-                        assert eventType != null;
-                        v.eventTypes.add(eventType);
+                    for (String eType : child.child("eventTypes").getValue(String.class).split(",")) {
+                        v.eventTypes.add(eType);
                     }
+                    venueList.add(v.name);
                     venues.add(v);
                 }
 
@@ -153,8 +117,8 @@ public class CreateEventFragment extends Fragment {
 
                 // Populate Event Type spinner values
 
-                EventType [] evenTypeArray = v.eventTypes.toArray(new EventType[0]);
-                ArrayAdapter<EventType> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
+                String [] evenTypeArray = v.eventTypes.toArray(new String[0]);
+                ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, evenTypeArray);
                 eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 et_spinner.setAdapter(eventAdapter);
@@ -191,7 +155,7 @@ public class CreateEventFragment extends Fragment {
         court_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                courtno = i + 1;
+                courtNo = i + 1;
             }
 
             @Override
@@ -213,10 +177,10 @@ public class CreateEventFragment extends Fragment {
         TimePicker startTime = view.findViewById(R.id.create_starttime);
         TimePicker endTime = view.findViewById(R.id.create_endtime);
 
-        startTime.setHour(d.getHour());
-        startTime.setMinute(d.getMinute());
-        endTime.setHour(d.getHour());
-        endTime.setMinute(d.getMinute());
+        startTime.setHour(d.getHour() + 1);
+        startTime.setMinute(0);
+        endTime.setHour(d.getHour() + 2);
+        endTime.setMinute(0);
 
         view.findViewById(R.id.create_submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,10 +204,10 @@ public class CreateEventFragment extends Fragment {
         Button s = v.findViewById(R.id.create_submit);
 
         // Calculate startdate
-        long SD = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth(), startTime.getHour(), startTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
+        long SD = LocalDateTime.of(startDate.getYear(), startDate.getMonth() + 1, startDate.getDayOfMonth(), startTime.getHour(), startTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
 
         // Calculate enddate
-        long ED = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDayOfMonth(), endTime.getHour(), endTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
+        long ED = LocalDateTime.of(endDate.getYear(), endDate.getMonth() + 1, endDate.getDayOfMonth(), endTime.getHour(), endTime.getMinute()).atZone(ZoneId.systemDefault()).toEpochSecond();
 
         // Verification
         Venue venObj = Venue.getByID(this.venues, this.venueID);
@@ -256,11 +220,14 @@ public class CreateEventFragment extends Fragment {
             maxplayer.setError("Max players cannot be empty.");
             maxplayer.requestFocus();
             return;
+        } else if (SD > ED) {
+            Toast.makeText(getContext(), "Start date cannot be after end date", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Event e = new Event(totalEvents + 1, Database.currentUser, name.getText().toString(), desc.getText().toString(), Integer.parseInt(maxplayer.getText().toString()),
                 SD, ED, this.venueID, this.eventType,
-                this.courtno);
+                this.courtNo);
 
         e.attendees.add(new User(Database.currentUser));
 

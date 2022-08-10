@@ -1,11 +1,19 @@
 package com.utsc.project;
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.firebase.database.Exclude;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
-public class Event {
+public class Event implements Comparable<Event>{
 
     public int id;
     public String creatorID;
@@ -18,14 +26,14 @@ public class Event {
     HashSet<User> attendees;
     public int venueID;
     public int courtNumber;
-    public EventType eventType;
+    public String eventType;
 
     public Event() {
         this.attendees = new HashSet<>();
     }
 
     public Event(int id, String creatorID, String name, String description, int maxPlayers,
-                 long startTime, long endTime, int venueID, EventType eventType, int courtNumber) {
+                 long startTime, long endTime, int venueID, String eventType, int courtNumber) {
         this.id = id;
         this.creatorID = creatorID;
         this.name = name;
@@ -69,5 +77,25 @@ public class Event {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Event event) { // compares based on start time
+        if (this.startTime == event.startTime) {
+            return 0;
+        }
+        else if (this.startTime < event.startTime) {
+            return -1;
+        }
+        return 1;
+    }
+
+    @Exclude
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean isOver() {
+        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime scheduledEnd = LocalDateTime.ofInstant(Instant.ofEpochSecond(this.endTime), ZoneId.systemDefault());
+
+        return scheduledEnd.isBefore(current);
     }
 }
