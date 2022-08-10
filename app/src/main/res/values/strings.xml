@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">PROJECT</string>
+    <string name="app_name">SEVA</string>
+    <string name="return_to_login">RETURN TO LOGIN</string>
+    <string name="log_out">Log out</string>
     <string name="add_venue_title">Add a Venue</string>
     <string name="add_venue_name">Venue Name:</string>
     <string name="add_venue_num_courts">Number of Courts:</string>
@@ -14,7 +16,7 @@
     <string name="create_event_event_type_title">Event Type:</string>
     <string name="create_event_name">Event Name:</string>
     <string name="create_event_name_hint">Name</string>
-    <string name="create_event_desc_title">Description</string>
+    <string name="create_event_desc_title">Description:</string>
     <string name="create_event_maxpl_title">Max Players:</string>
     <string name="create_event_startdate_title">Start Date:</string>
     <string name="create_event_starttime_tite">Start Time:</string>

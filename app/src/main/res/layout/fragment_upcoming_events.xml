@@ -25,19 +25,6 @@
 <!--            app:layout_constraintStart_toStartOf="parent"-->
 <!--            app:layout_constraintTop_toTopOf="@+id/upcomingEventsBackButton" />-->
 
-        <Button
-            android:id="@+id/upcomingEventsBackButton"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:onClick="goBack"
-            android:textAlignment="center"
-            app:icon="@drawable/ic_baseline_arrow_back_ios_new_24"
-            app:iconPadding="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/eventsRecycler"
             android:layout_width="0dp"
@@ -46,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upcomingEventsBackButton"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
