@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.userToolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_log_out:
+                    Database.setCurrentUser("");
                     Intent intent = new Intent(this, LoginPage.class);
                     startActivity(intent);
                     return true;
