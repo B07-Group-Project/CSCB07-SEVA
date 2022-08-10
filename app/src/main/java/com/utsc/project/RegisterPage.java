@@ -17,22 +17,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class RegisterPage extends AppCompatActivity implements View.OnClickListener {
 
+    private TextView register;
     private EditText username, password, c_password;
-    public boolean taken_by_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
 
+        register = (Button) findViewById(R.id.button3);
+
         username = (EditText) findViewById(R.id.editTextTextPersonName);
         password = (EditText) findViewById(R.id.editTextTextPassword2);
         c_password = (EditText) findViewById(R.id.editTextTextPassword3);
-
-        getSupportActionBar().show();
-
     }
 
     @Override
@@ -43,15 +44,17 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void register_user() {
-        taken_by_admin = false;
+    public boolean taken;
 
-        String name = username.getText().toString();
-        String pw = password.getText().toString();
-        String cpw = c_password.getText().toString();
+    private void register_user() {
+        taken = false;
+
+        String name = username.getText().toString().trim();
+        String pw = password.getText().toString().trim();
+        String cpw = c_password.getText().toString().trim();
 
         if(name.isEmpty()){
-            username.setError("Username cannot be empty!");
+            username.setError("User name cannot be empty!");
             username.requestFocus();
             return;
         }
@@ -82,12 +85,12 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
         admin_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    User admin = child.getValue(User.class);
-                    if (admin.id.equals(name)) {
+                for (DataSnapshot child : snapshot.getChildren()){
+                    User u = (child.getValue(User.class));
+                    if(u.id.equals(name)){
+                        taken = true;
                         username.setError("Username taken!");
                         username.requestFocus();
-                        taken_by_admin = true;
                         return;
                     }
                 }
@@ -99,10 +102,6 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        if (taken_by_admin) { // username taken by admin
-            return;
-        }
-
         DatabaseReference user_ref = ref.child("Users");
         user_ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -110,18 +109,23 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     User u = (snapshot.getValue(User.class));
                     if(u.id.equals(name)){
+                        taken = true;
                         username.setError("Username taken!");
                         username.requestFocus();
                         return;
                     }
                 }
 
-                User user = new User(name, pw);
-                ref.child("Users").child(name).setValue(user);
+                if (!taken) {
+                    User user = new User(name, pw);
+                    user_ref.removeEventListener(this);
+                    ref.child("Users").child(name).setValue(user);
+                    Database.setCurrentUser(name);
 
-                Database.setCurrentUser(name);
-                Intent log_in = new Intent(RegisterPage.this, HomeActivity.class);
-                startActivity(log_in);
+                    Intent log_in = new Intent(RegisterPage.this, HomeActivity.class);
+                    startActivity(log_in);
+                }
+
             }
 
             @Override

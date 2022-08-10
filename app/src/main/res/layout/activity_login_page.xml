@@ -21,26 +21,14 @@
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="56dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/app_name"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#673AB7"
-                android:textSize="34sp"
-                android:textStyle="bold" />
-
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="141dp"
-                android:layout_height="141dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="48dp"
                 android:backgroundTint="#270E0E"
-                app:srcCompat="@drawable/ic_baseline_sports_volleyball_24" />
+                app:srcCompat="@drawable/seva_logo"
+                tools:srcCompat="@drawable/seva_logo" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
