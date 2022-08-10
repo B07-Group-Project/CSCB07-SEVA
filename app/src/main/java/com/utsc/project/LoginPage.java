@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class login_page extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
 
     private EditText username, password;
 
@@ -27,11 +27,12 @@ public class login_page extends AppCompatActivity {
         username = (EditText) findViewById(R.id.editTextTextPersonName2);
         password = (EditText) findViewById(R.id.editTextTextPassword);
 
+        getSupportActionBar().hide();
 
     }
 
     public void take_to_register(View view){
-        Intent intent = new Intent(this, Register_page.class);
+        Intent intent = new Intent(this, RegisterPage.class);
         startActivity(intent);
     }
 
@@ -62,7 +63,7 @@ public class login_page extends AppCompatActivity {
                     User admin = snapshot_a.getValue(User.class);
                     if(admin.id.equals(a_name) && admin.password.equals(a_pw)){
                         validLogin = true;
-                        Intent alogin = new Intent(login_page.this,
+                        Intent alogin = new Intent(LoginPage.this,
                                 AdminHomeActivity.class);
                         startActivity(alogin);
                     }
@@ -87,7 +88,7 @@ public class login_page extends AppCompatActivity {
                     if(registered.id.equals(name) && registered.password.equals(pw)){
                         validLogin = true;
                         Database.setCurrentUser(name);
-                        Intent log_in = new Intent(login_page.this, HomeActivity.class);
+                        Intent log_in = new Intent(LoginPage.this, HomeActivity.class);
                         startActivity(log_in);
                     }
                     else if(registered.id.equals(name)) {

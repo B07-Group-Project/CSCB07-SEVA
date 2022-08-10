@@ -17,9 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
-public class Register_page extends AppCompatActivity implements View.OnClickListener {
+public class RegisterPage extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register;
     private EditText username, password, c_password;
@@ -34,6 +32,9 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
         username = (EditText) findViewById(R.id.editTextTextPersonName);
         password = (EditText) findViewById(R.id.editTextTextPassword2);
         c_password = (EditText) findViewById(R.id.editTextTextPassword3);
+
+        getSupportActionBar().show();
+
     }
 
     @Override
@@ -50,7 +51,7 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
         String cpw = c_password.getText().toString().trim();
 
         if(name.isEmpty()){
-            username.setError("User name cannot be empty!");
+            username.setError("Username cannot be empty!");
             username.requestFocus();
             return;
         }
@@ -97,7 +98,7 @@ public class Register_page extends AppCompatActivity implements View.OnClickList
                 ref.child("Users").child(name).setValue(user);
 
                 Database.setCurrentUser(name);
-                Intent log_in = new Intent(Register_page.this, HomeActivity.class);
+                Intent log_in = new Intent(RegisterPage.this, HomeActivity.class);
                 startActivity(log_in);
             }
 
