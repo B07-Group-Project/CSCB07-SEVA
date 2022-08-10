@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -28,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class CreateEventFragment extends Fragment {
@@ -77,6 +77,7 @@ public class CreateEventFragment extends Fragment {
                 }
 
                 String [] venueArray =  venueList.toArray(new String[0]); // https://stackoverflow.com/questions/53284214/toarray-with-pre-sized-array
+                Arrays.sort(venueArray);
                 ArrayAdapter<String> venueAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, venueArray);
                 venueAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
