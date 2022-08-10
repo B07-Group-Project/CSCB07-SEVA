@@ -3,6 +3,7 @@ package com.utsc.project;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Venue implements Comparable<Venue>{
     public String name = "Loading...";
@@ -36,4 +37,5 @@ public class Venue implements Comparable<Venue>{
     public int compareTo(Venue venue) {
         return this.name.compareTo(venue.name);
     }
+
 }

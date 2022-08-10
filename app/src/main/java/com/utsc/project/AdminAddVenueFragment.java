@@ -136,6 +136,7 @@ public class AdminAddVenueFragment extends Fragment {
             return;
         }
 
+        eType = eType.substring(0, 1).toUpperCase() + eType.substring(1).toLowerCase();
         if (!adapter.selectedTypes.contains(eType)) {
             adapter.selectedTypes.add(eType);
         }
