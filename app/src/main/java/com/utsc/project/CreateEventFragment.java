@@ -60,6 +60,11 @@ public class CreateEventFragment extends Fragment {
         ValueEventListener spinnerPop = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (getActivity() == null) {
+                    return;
+                }
+
                 // Reset Arrays
                 venues.clear();
 
