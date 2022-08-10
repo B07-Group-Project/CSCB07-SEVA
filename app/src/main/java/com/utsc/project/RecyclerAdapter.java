@@ -42,7 +42,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView eventName, creator, startTime, endTime, description, venue, eventType, courtNumber, attendees;
         public ToggleButton join_button;
-        public ImageView image;
 
         public MyViewHolder(final View view) {
             super(view);
@@ -57,7 +56,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.description = view.findViewById(R.id.descriptionTextView);
             this.attendees = view.findViewById(R.id.playerCountTextView);
             this.join_button = view.findViewById(R.id.joinToggleButton);
-            this.image = view.findViewById(R.id.eventImageView);
 
         }
     }

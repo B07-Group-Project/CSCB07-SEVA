@@ -21,6 +21,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     private TextView register;
     private EditText username, password, c_password;
+    public boolean taken_by_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +47,11 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
     }
 
     private void register_user() {
-        String name = username.getText().toString().trim();
-        String pw = password.getText().toString().trim();
-        String cpw = c_password.getText().toString().trim();
+        taken_by_admin = false;
+
+        String name = username.getText().toString();
+        String pw = password.getText().toString();
+        String cpw = c_password.getText().toString();
 
         if(name.isEmpty()){
             username.setError("Username cannot be empty!");
@@ -78,6 +81,30 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                 FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com"
                 ).getReference();
 
+        DatabaseReference admin_ref = ref.child("Admins");
+        admin_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    User admin = child.getValue(User.class);
+                    if (admin.id.equals(name)) {
+                        username.setError("Username taken!");
+                        username.requestFocus();
+                        taken_by_admin = true;
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if (taken_by_admin) { // username taken by admin
+            return;
+        }
 
         DatabaseReference user_ref = ref.child("Users");
         user_ref.addValueEventListener(new ValueEventListener() {
@@ -86,10 +113,8 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     User u = (snapshot.getValue(User.class));
                     if(u.id.equals(name)){
-                        if (!name.equals(Database.currentUser)) {
-                            username.setError("Username taken!");
-                            username.requestFocus();
-                        }
+                        username.setError("Username taken!");
+                        username.requestFocus();
                         return;
                     }
                 }
