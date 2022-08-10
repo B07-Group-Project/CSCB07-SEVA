@@ -3,6 +3,7 @@ package com.utsc.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     private EditText username, password, c_password;
     public boolean taken_by_admin;
+    public boolean success;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
     private void register_user() {
         taken_by_admin = false;
+        success = false;
 
         String name = username.getText().toString();
         String pw = password.getText().toString();
@@ -109,7 +112,7 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     User u = (snapshot.getValue(User.class));
-                    if(u.id.equals(name)){
+                    if(u.id.equals(name) && !success){
                         username.setError("Username taken!");
                         username.requestFocus();
                         return;
@@ -118,8 +121,8 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
 
                 User user = new User(name, pw);
                 ref.child("Users").child(name).setValue(user);
-
                 Database.setCurrentUser(name);
+                success = true;
                 Intent log_in = new Intent(RegisterPage.this, HomeActivity.class);
                 startActivity(log_in);
             }
