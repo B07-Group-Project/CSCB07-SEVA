@@ -17,7 +17,7 @@
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_login_page.xml" value="0.264" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_register_page.xml" value="0.25" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/activity_venue_display.xml" value="0.1" />
-        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/admin_list_my_events.xml" value="0.25" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/admin_list_my_events.xml" value="0.4" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/custom_action_bar.xml" value="0.2" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_admin_add_venue.xml" value="0.264" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_admin_upcoming_events.xml" value="0.25" />
@@ -28,6 +28,7 @@
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/fragment_venue_display.xml" value="0.25" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/list_events.xml" value="0.4" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/list_my_events.xml" value="0.4" />
+        <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/layout/venue_button_item.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/action_bar.xml" value="0.264" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/admin_nav_bar.xml" value="0.25" />
         <entry key="..\:/Users/amyll/Desktop/Github/Project/app/src/main/res/menu/custom_action_bar.xml" value="0.24895833333333334" />

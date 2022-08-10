@@ -20,7 +20,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class AdminVenueDisplayFragment extends Fragment {
+
+    private ArrayList<Venue> venueList;
 
     public AdminVenueDisplayFragment() {
         // Required empty public constructor
@@ -36,7 +41,6 @@ public class AdminVenueDisplayFragment extends Fragment {
     }
 
     void addVenueButton(Venue ve, LinearLayout ll) {
-
         Button b = new Button(getActivity());
         b.setText(ve.name);
         View.OnClickListener l = new View.OnClickListener() {
@@ -57,19 +61,31 @@ public class AdminVenueDisplayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.venueList = new ArrayList<Venue>();
 
         View view = inflater.inflate(R.layout.fragment_admin_venue_display, container, false);
-        LinearLayout ll = (LinearLayout) view.findViewById(R.id.venuelistlayout);
+        LinearLayout ll = (LinearLayout) view.findViewById(R.id.adminvenuelistlayout);
 
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (getActivity() == null) {
+                    return;
+                }
+
+                venueList.clear();
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
                     assert v != null;
                     for (String eventString : child.child("eventTypes").getValue(String.class).split(",")) {
                         v.eventTypes.add(eventString);
                     }
+                    venueList.add(v);
+                }
+
+                Collections.sort(venueList);
+                for (Venue v : venueList) {
                     addVenueButton(v, ll);
                 }
             }

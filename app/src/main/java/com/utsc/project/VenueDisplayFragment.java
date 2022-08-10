@@ -22,7 +22,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class VenueDisplayFragment extends Fragment {
+
+    private ArrayList<Venue> venueList;
 
     public VenueDisplayFragment() {
         // Required empty public constructor
@@ -56,6 +61,7 @@ public class VenueDisplayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.venueList = new ArrayList<Venue>();
 
         View view = inflater.inflate(R.layout.fragment_venue_display, container, false);
         LinearLayout ll = (LinearLayout) view.findViewById(R.id.venuelistlayout);
@@ -63,12 +69,20 @@ public class VenueDisplayFragment extends Fragment {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                venueList.clear();
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
                     assert v != null;
                     for (String eventString : child.child("eventTypes").getValue(String.class).split(",")) {
                         v.eventTypes.add(eventString);
                     }
+                    venueList.add(v);
+                }
+
+
+                Collections.sort(venueList);
+                for (Venue v : venueList) {
                     addVenueButton(v, ll);
                 }
             }

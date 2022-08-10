@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -73,7 +74,7 @@ public class AdminEventsByVenueFragment extends Fragment {
             }
         });
 
-        recyclerView = view.findViewById(R.id.eventsRecycler);
+        recyclerView = view.findViewById(R.id.admineventsrecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         eventList = new ArrayList<Event>();
@@ -113,7 +114,16 @@ public class AdminEventsByVenueFragment extends Fragment {
                         }, e.id);
                     }
                 }
-                Collections.sort(eventList);
+
+                // checks when to display the no events message
+                TextView tv = view.findViewById(R.id.adminVenueNoEvents);
+                if (eventList.isEmpty()) {
+                    tv.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tv.setVisibility(View.GONE);
+                    Collections.sort(eventList);
+                }
                 adapter.notifyDataSetChanged();
             }
 

@@ -16,69 +16,34 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="347dp"
+            android:id="@+id/adminDescriptionTextView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:minLines="1"
             android:text="Description: This is my event!"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout3" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="243dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/adminPlayerCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:orientation="vertical"
+            android:text="###/###"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView">
-
-            <TextView
-                android:id="@+id/playerCountTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:text="###/###"
-                android:textAlignment="viewStart"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/creatorTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Created by: User"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/startTimeTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Start time: July 2"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/endTimeTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="End time: July 4"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayout3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -90,7 +55,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/eventNameTextView"
+                android:id="@+id/adminEventNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0dp"
@@ -101,30 +66,70 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/eventTypeTextView"
+                android:id="@+id/adminCreatorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Created by: User"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/adminStartTimeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start time: July 2"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/adminEndTimeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End time: July 4"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/adminPlayerCountTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/adminDescriptionTextView">
+
+            <TextView
+                android:id="@+id/adminEventTypeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:text="Event type: Basketball"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/venueTextView"
+                android:id="@+id/adminVenueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:text="Venue: SomeVenue"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/courtNumTextView"
+                android:id="@+id/adminCourtNumTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:text="Court #"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

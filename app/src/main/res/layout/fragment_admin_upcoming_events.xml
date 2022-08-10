@@ -6,35 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".EventsByVenueFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/adminVenueNoEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/venue_no_events"
+        android:textColor="#9c9c9c"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/admineventsrecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".EventsByVenueFragment">
+        android:layout_height="match_parent" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/eventName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Events for Venue"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/upcomingEventsBackButton"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.5"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/upcomingEventsBackButton" />-->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/eventsRecycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
