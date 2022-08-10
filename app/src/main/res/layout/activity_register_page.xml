@@ -23,7 +23,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="48dp"
                 android:backgroundTint="#270E0E"
-                app:srcCompat="@drawable/ic_baseline_sports_volleyball_24"
+                app:srcCompat="@drawable/seva_logo"
                 tools:srcCompat="@drawable/seva_logo" />
 
             <EditText
