@@ -37,7 +37,6 @@ public class AdminVenueDisplayFragment extends Fragment {
 
     void addVenueButton(Venue ve, LinearLayout ll) {
 
-        Context c = getActivity();
         Button b = new Button(getActivity());
         b.setText(ve.name);
         View.OnClickListener l = new View.OnClickListener() {

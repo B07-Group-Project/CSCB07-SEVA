@@ -3,6 +3,9 @@ package com.utsc.project;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Collections;
+
 public class Database {
 
     public static String currentUser;
@@ -59,6 +62,7 @@ public class Database {
     static void storeVenue(Venue v) {
         DatabaseReference ref = FirebaseDatabase.getInstance("https://b07project-e4016-default-rtdb.firebaseio.com").getReference("Venues");
         ref.child(Integer.toString(v.id)).setValue(v);
+        Collections.sort(v.eventTypes);
         // Store eventTypes
         StringBuilder etstring = new StringBuilder();
         for (String et : v.eventTypes) {

@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class RegisterPage extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView register;
     private EditText username, password, c_password;
     public boolean taken_by_admin;
 
@@ -27,8 +26,6 @@ public class RegisterPage extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
-
-        register = (Button) findViewById(R.id.button3);
 
         username = (EditText) findViewById(R.id.editTextTextPersonName);
         password = (EditText) findViewById(R.id.editTextTextPassword2);

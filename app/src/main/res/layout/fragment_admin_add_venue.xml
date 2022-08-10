@@ -66,11 +66,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/eventTypeRV"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="400dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:background="#FFFFFF"
+                android:backgroundTint="#F4F4F4"
+                android:minHeight="200dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
