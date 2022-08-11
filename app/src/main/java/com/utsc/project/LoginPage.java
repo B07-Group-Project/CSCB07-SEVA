@@ -96,6 +96,7 @@ public class LoginPage extends AppCompatActivity {
                 for (DataSnapshot snapshot_u : u_snapshot.getChildren()) {
                     User registered = snapshot_u.getValue(User.class);
                     if (registered.id.equals(name) && registered.password.equals(pw)) {
+                        u_ref.removeEventListener(this);
                         Database.setCurrentUser(name);
                         Intent log_in = new Intent(LoginPage.this, HomeActivity.class);
                         startActivity(log_in);

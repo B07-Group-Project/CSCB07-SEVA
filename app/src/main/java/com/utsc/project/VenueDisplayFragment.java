@@ -70,6 +70,11 @@ public class VenueDisplayFragment extends Fragment {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (getActivity() == null) {
+                    return;
+                }
+
                 venueList.clear();
                 ll.removeAllViews();
 

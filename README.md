@@ -1,6 +1,10 @@
-# CSCB07 Project
+# CSCB07 Project Summer 2022
 
 #### App name: SEVA (Sports Events and Venues Application)
+
+__Group Members:__ Noah Cristino, Jiayou (Mike) Qin, Amy Li (Scrum Master), Faraz Malik
+
+---
 
 #### Admin Login Credentials
 1. Username: admin (Password: imadmin)

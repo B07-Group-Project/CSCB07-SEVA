@@ -169,7 +169,7 @@ public class AdminAddVenueFragment extends Fragment {
             return;
         }
 
-        Venue venue = new Venue(name.getText().toString(), this.totalVenues + 1, Integer.parseInt(courts.getText().toString()));
+        Venue venue = new Venue(name.getText().toString().trim(), this.totalVenues + 1, Integer.parseInt(courts.getText().toString()));
         venue.eventTypes.addAll(this.adapter.selectedTypes);
         Database.storeVenue(venue);
 

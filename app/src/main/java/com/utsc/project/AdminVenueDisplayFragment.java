@@ -74,6 +74,7 @@ public class AdminVenueDisplayFragment extends Fragment {
                 }
 
                 venueList.clear();
+                ll.removeAllViews();
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Venue v = child.getValue(Venue.class);
